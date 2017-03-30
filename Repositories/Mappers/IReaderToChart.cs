@@ -1,5 +1,6 @@
 using Models;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Repositories.Mappers {
     public interface IReaderToChart

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Models;
 /// <summary>
 /// An ADO.NET helper class
@@ -93,57 +94,46 @@ namespace Repositories.Helpers {
             return cmd;
         }
 
+        public SqlCommand CreateCommand(string qry, SqlConnection connection, CommandType type, params object[] args)
+        {
+            SqlCommand cmd = new SqlCommand(qry, connection);
+
+            // Associate with current transaction, if any
+            if (_trans != null)
+                cmd.Transaction = _trans;
+
+            // Set command type
+            cmd.CommandType = type;
+
+            // Construct SQL parameters
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] is string && i < (args.Length - 1))
+                {
+                    SqlParameter parm = new SqlParameter();
+                    parm.ParameterName = (string)args[i];
+                    parm.Value = args[++i];
+                    cmd.Parameters.Add(parm);
+                }
+                else if (args[i] is SqlParameter)
+                {
+                    cmd.Parameters.Add((SqlParameter)args[i]);
+                }
+                else throw new ArgumentException("Invalid number or type of arguments supplied");
+            }
+            return cmd;
+        }
+
+
         #region Exec Members
 
         /// <summary>
-        /// Executes a query that returns no results
-        /// </summary>
-        /// <param name="qry">Query text</param>
-        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
-        /// <returns>The number of rows affected</returns>
-        public int ExecNonQuery(string qry, params object[] args)
-        {
-            using (SqlCommand cmd = CreateCommand(qry, CommandType.Text, args))
-            {
-                return cmd.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Executes a stored procedure that returns no results
-        /// </summary>
-        /// <param name="proc">Name of stored proceduret</param>
-        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
-        /// <returns>The number of rows affected</returns>
-        public int ExecNonQueryProc(string proc, params object[] args)
-        {
-            using (SqlCommand cmd = CreateCommand(proc, CommandType.StoredProcedure, args))
-            {
-                return cmd.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
         /// Executes a query that returns a single value
         /// </summary>
-        /// <param name="qry">Query text</param>
+        /// <param name="proc">Name of stored proceduret</param>
         /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
         /// <returns>Value of first column and first row of the results</returns>
         public object ExecScalar(string qry, params object[] args)
-        {
-            using (SqlCommand cmd = CreateCommand(qry, CommandType.Text, args))
-            {
-                return cmd.ExecuteScalar();
-            }
-        }
-
-        /// <summary>
-        /// Executes a query that returns a single value
-        /// </summary>
-        /// <param name="proc">Name of stored proceduret</param>
-        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
-        /// <returns>Value of first column and first row of the results</returns>
-        public object ExecScalarProc(string qry, params object[] args)
         {
             using (SqlCommand cmd = CreateCommand(qry, CommandType.StoredProcedure, args))
             {
@@ -162,6 +152,24 @@ namespace Repositories.Helpers {
             using (SqlCommand cmd = CreateCommand(qry, CommandType.Text, args))
             {
                 return cmd.ExecuteReader();
+            }
+        }
+
+        /// <summary>
+        /// Executes a query async and returns the results as a SqlDataReader
+        /// </summary>
+        /// <param name="qry">Query text</param>
+        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
+        /// <returns>Results as a SqlDataReader</returns>
+        public async Task<SqlDataReader> ExecDataReaderAsync(string qry, params object[] args)
+        {
+            using (var conn = new SqlConnection(_connString)){
+                await conn.OpenAsync();
+
+                using (SqlCommand cmd = CreateCommand(qry, conn, CommandType.Text, args))
+                {   
+                    return await cmd.ExecuteReaderAsync();
+                }
             }
         }
 
