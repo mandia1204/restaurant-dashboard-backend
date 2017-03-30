@@ -16,24 +16,10 @@ namespace Repositories.Helpers {
         protected bool _disposed = false;
 
         /// <summary>
-        /// Sets or returns the connection string use by all instances of this class.
-        /// </summary>
-        public static string ConnectionString { get; set; }
-
-        /// <summary>
         /// Returns the current SqlTransaction object or null if no transaction
         /// is in effect.
         /// </summary>
         public SqlTransaction Transaction { get { return _trans; } }
-
-        /// <summary>
-        /// Constructor using global connection string.
-        /// </summary>
-        public AdoHelper()
-        {
-            _connString = ConnectionString;
-            Connect();
-        }
 
         /// <summary>
         /// Constructure using connection string override
@@ -50,7 +36,7 @@ namespace Repositories.Helpers {
         protected void Connect()
         {
             _conn = new SqlConnection(_connString);
-            _conn.Open();
+            _conn.OpenAsync();
         }
 
         /// <summary>
@@ -133,25 +119,11 @@ namespace Repositories.Helpers {
         /// <param name="proc">Name of stored proceduret</param>
         /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
         /// <returns>Value of first column and first row of the results</returns>
-        public object ExecScalar(string qry, params object[] args)
+        public object ExecScalarAsync(string qry, params object[] args)
         {
             using (SqlCommand cmd = CreateCommand(qry, CommandType.StoredProcedure, args))
             {
-                return cmd.ExecuteScalar();
-            }
-        }
-
-        /// <summary>
-        /// Executes a query and returns the results as a SqlDataReader
-        /// </summary>
-        /// <param name="qry">Query text</param>
-        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
-        /// <returns>Results as a SqlDataReader</returns>
-        public SqlDataReader ExecDataReader(string qry, params object[] args)
-        {
-            using (SqlCommand cmd = CreateCommand(qry, CommandType.Text, args))
-            {
-                return cmd.ExecuteReader();
+                return cmd.ExecuteScalarAsync();
             }
         }
 
@@ -161,29 +133,11 @@ namespace Repositories.Helpers {
         /// <param name="qry">Query text</param>
         /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
         /// <returns>Results as a SqlDataReader</returns>
-        public async Task<SqlDataReader> ExecDataReaderAsync(string qry, params object[] args)
+        public async Task<SqlDataReader> ExecDataReaderAsync(string qry, CommandType cmdType = CommandType.Text, params object[] args)
         {
-            using (var conn = new SqlConnection(_connString)){
-                await conn.OpenAsync();
-
-                using (SqlCommand cmd = CreateCommand(qry, conn, CommandType.Text, args))
-                {   
-                    return await cmd.ExecuteReaderAsync();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Executes a stored procedure and returns the results as a SqlDataReader
-        /// </summary>
-        /// <param name="proc">Name of stored proceduret</param>
-        /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
-        /// <returns>Results as a SqlDataReader</returns>
-        public SqlDataReader ExecDataReaderProc(string qry, params object[] args)
-        {
-            using (SqlCommand cmd = CreateCommand(qry, CommandType.StoredProcedure, args))
-            {
-                return cmd.ExecuteReader();
+            using (SqlCommand cmd = CreateCommand(qry, cmdType, args))
+            {   
+                return await cmd.ExecuteReaderAsync();
             }
         }
 
