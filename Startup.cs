@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Models;
 using Repositories;
 using Services;
 
@@ -31,6 +32,9 @@ namespace restaurant_dashboard_backend
         {
             // Add framework services.
             services.AddMvc();
+            services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
+
+            services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
             services.AddSingleton<IDashboardRepository, DashboardRepository>();
         }

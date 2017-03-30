@@ -1,10 +1,28 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
+using Services;
 
-namespace Repositories{
+namespace Repositories {
     public class DashboardRepository : IDashboardRepository{
+
+        private DatabaseSettings _dbSettings;
+        public DashboardRepository(IAppSettingsService appSettings){
+            _dbSettings = appSettings.GetDatabaseSettings();
+        }
+
         public async Task<Dashboard> GetDashboardAsync(){
+            
+            // using(var helper = new AdoHelper(_dbSettings)){
+            //     using(var reader = helper.ExecDataReader("select TOP 10 * from TMESA")){
+            //         while (reader.Read())
+            //         {
+            //             Console.WriteLine("{0} {1} {2}",reader.GetString(0), reader.GetString(1), reader.GetString(2));
+            //         }
+            //     }
+            // }
+            
             var dashboard = new Dashboard {
                 charts = new List<ChartData>{
                     new ChartData {
