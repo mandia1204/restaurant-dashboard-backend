@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Models;
 using Repositories;
+using Repositories.Mappers;
 using Services;
 
 namespace restaurant_dashboard_backend
@@ -37,6 +38,7 @@ namespace restaurant_dashboard_backend
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
             services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            services.AddSingleton<IReaderToChart, ReaderToChart>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
