@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
@@ -42,20 +41,4 @@ namespace Repositories {
             return dashboard;
         }
     }
-
-    // string connectionString = string.Format(@"Data Source=.\sql2008express; Initial Catalog=VENTAS; User id=sa; Password=1234;");
-            
-            // using (var con = new SqlConnection(connectionString))
-            // {
-            //     con.Open();
-            //     using (var command = new SqlCommand("select TOP 10 * from TMESA", con))
-            //     using (var reader = command.ExecuteReader())
-            //     {
-            //         while (reader.Read())
-            //         {
-            //             Console.WriteLine("{0} {1} {2}",
-            //                 reader.GetString(0), reader.GetString(1), reader.GetString(2));
-            //         }
-            //     }
-            // }
 }
