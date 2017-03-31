@@ -1,24 +1,19 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Threading.Tasks;
 using Models;
 using Util;
 
 namespace Repositories.Mappers {
     public class ReaderToChart: IReaderToChart {
-        public Chart Map(SqlDataReader r, string chartName) {
+        public Chart Map(SqlDataReader r, string chartName, string title) {
             var chart = new Chart{ name = chartName} ;
             //titulo, etiqueta , total
             //VENTAS_ANUALES, Enero, 15000 
             var labels = new List<string>();
             var data = new List<int>();
-            var title = "";
             while (r.Read()){
-                if(title == "") 
-                    title = Constants.DataSetLabels[r.GetString(0)];
-
-                labels.Add(r.GetString(1));
-                data.Add(r.GetInt32(2));
+                labels.Add(Constants.Meses[r.GetInt32(0)]);
+                data.Add((int)r.GetDouble(1));
             }
 
             chart.labels = labels.ToArray();

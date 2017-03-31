@@ -36,7 +36,7 @@ namespace Repositories.Helpers {
         protected void Connect()
         {
             _conn = new SqlConnection(_connString);
-            _conn.OpenAsync();
+            _conn.Open();
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Repositories.Helpers {
         /// <param name="qry">Query text</param>
         /// <param name="args">Any number of parameter name/value pairs and/or SQLParameter arguments</param>
         /// <returns>Results as a SqlDataReader</returns>
-        public async Task<SqlDataReader> ExecDataReaderAsync(string qry, CommandType cmdType = CommandType.Text, params object[] args)
+        public async Task<SqlDataReader> ExecDataReaderAsync(string qry, CommandType cmdType = CommandType.StoredProcedure, params object[] args)
         {
             using (SqlCommand cmd = CreateCommand(qry, cmdType, args))
             {   

@@ -20,8 +20,8 @@ namespace Repositories {
             var dashboard = new Dashboard { charts = new List<Chart>() };
 
             using(var helper = new AdoHelper(_dbSettings)){
-                using(var reader = await helper.ExecDataReaderAsync("select TOP 10 * from TMESA")){
-                    dashboard.charts.Add(_readerToChart.Map(reader, "VENTAS"));
+                using(var reader = await helper.ExecDataReaderAsync("USP_DASHBOARD_VENTA_ANUAL")){
+                    dashboard.charts.Add(_readerToChart.Map(reader, "VENTAS", "Ventas Anuales"));
                 }
             }
 
