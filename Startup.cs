@@ -28,6 +28,7 @@ namespace restaurant_dashboard_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             // Add framework services.
             services.AddMvc();
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
@@ -45,7 +46,16 @@ namespace restaurant_dashboard_backend
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors(builder =>
+                {
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                    builder.AllowAnyOrigin();
+                }
+            );
+            
             app.UseMvc();
+            
         }
     }
 }
