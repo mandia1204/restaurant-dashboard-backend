@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Models;
 using Repositories;
+using Repositories.Mocks;
 using Repositories.Mappers;
 using Services;
 
@@ -37,7 +34,8 @@ namespace restaurant_dashboard_backend
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
-            services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            //services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
             services.AddSingleton<IReaderToChart, ReaderToChart>();
         }
 
