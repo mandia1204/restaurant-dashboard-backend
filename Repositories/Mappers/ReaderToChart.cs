@@ -7,8 +7,7 @@ namespace Repositories.Mappers {
     public class ReaderToChart: IReaderToChart {
         public Chart Map(SqlDataReader r, string chartName, string title) {
             var chart = new Chart{ name = chartName} ;
-            //titulo, etiqueta , total
-            //VENTAS_ANUALES, Enero, 15000 
+            // [etiqueta , total]
             var labels = new List<string>();
             var data = new List<int>();
             while (r.Read()){
