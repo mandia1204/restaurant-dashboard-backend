@@ -31,6 +31,25 @@ namespace Repositories.Mocks {
                                 data= new int[] {28, 48, 40, 19, 86, 27, 90}
                             }
                         }
+                    },
+                    new Chart {
+                        name= "VENTAS_SEMANAL",
+                        labels= new string[] {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"},
+                        datasets= new List<Dataset> { 
+                            new Dataset {
+                                label= "Semana(01/03 - 07/03)",
+                                data= new int[] {3900, 1500, 4500, 11000, 5000, 1700, 2500}
+                            }
+                        }
+                    },
+                    new Chart {
+                        name= "PRODUCTOS_VENDIDOS",
+                        labels= new string[] {"Alimentos", "Bebidas", "Otros"},
+                        datasets= new List<Dataset> { 
+                            new Dataset {
+                                data= new int[] {15000, 7000, 6000}
+                            }
+                        }
                     }
                 }
             };
