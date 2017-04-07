@@ -8,4 +8,4 @@ WORKDIR /var/www/aspnetcoreapp
 COPY ./src/restaurant-dashboard-backend.csproj /var/www/aspnetcoreapp
 RUN dotnet restore
 
-ENTRYPOINT ["dotnet", "run"]
+ENTRYPOINT ["dotnet", "watch", "run"]
