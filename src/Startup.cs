@@ -8,6 +8,8 @@ using Repositories;
 using Repositories.Mocks;
 using Repositories.Mappers;
 using Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace restaurant_dashboard_backend
 {
@@ -53,9 +55,45 @@ namespace restaurant_dashboard_backend
                     builder.AllowAnyOrigin();
                 }
             );
-            
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions()
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = GetTokenValidationParameters()
+                // Events = new JwtBearerEvents {
+                //     OnAuthenticationFailed = context =>
+                //     {
+                //         Console.WriteLine("Auth failed");
+                //         return Task.FromResult(0);
+                //     },
+                //     OnMessageReceived = context => 
+                //     {
+                //         Console.WriteLine("Message received");
+                //         return Task.FromResult(0);
+                //     }
+                // }
+            });
             app.UseMvc();
-            
+        }
+
+        private SymmetricSecurityKey GetSigningKey() {
+            var secretKey = "Th1s1sth3endBeatuf@frieND823762873";
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
+            return signingKey;
+        }
+
+        private TokenValidationParameters GetTokenValidationParameters(){
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = GetSigningKey(),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime =false
+            };
+            return tokenValidationParameters;
         }
     }
 }

@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
 
 namespace restaurant_dashboard_backend.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {

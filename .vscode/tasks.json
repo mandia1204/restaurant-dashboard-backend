@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\restaurant-dashboard-backend.csproj"
+                "${workspaceRoot}\\src\\restaurant-dashboard-backend.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
