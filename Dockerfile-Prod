@@ -11,6 +11,8 @@ COPY ./src .
 
 RUN dotnet publish -c Release -o dist
 
-RUN rm -rf bin obj
+RUN rm -r bin obj Controllers Models Properties Repositories Services Util
+
+RUN rm appsettings.Development.json appsettings.json global.json Program.cs Startup.cs web.config restaurant-dashboard-backend.csproj hosting.json
 
 ENTRYPOINT ["dotnet", "dist/restaurant-dashboard-backend.dll"]
