@@ -37,9 +37,10 @@ namespace restaurant_dashboard_backend
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
-            //services.AddSingleton<IDashboardRepository, DashboardRepository>();
-            services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
+            services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            //services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
             services.AddSingleton<IReaderToChart, ReaderToChart>();
+            services.AddSingleton<IReaderToCard, ReaderToCard>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -27,7 +27,7 @@ namespace Repositories.Helpers {
         /// <param name="connString">Connection string for this instance</param>
         public AdoHelper(DatabaseSettings settings)
         {
-            _connString = string.Format(@"Data Source={0}; Initial Catalog={1}; User id={2}; Password={3};"
+            _connString = string.Format(@"Data Source={0}; Initial Catalog={1}; User id={2}; Password={3};MultipleActiveResultSets=True;"
             , settings.dataSource, settings.initialCatalog, settings.userId, settings.password);
             Connect();
         }
