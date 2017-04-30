@@ -7,14 +7,22 @@ using Repositories.Helpers;
 
 namespace Repositories {
     public class DashboardRepository : IDashboardRepository{
-
         private DatabaseSettings _dbSettings;
-        private IReaderToChart _readerToChart;
-        private IReaderToCard _readerToCard;
-        public DashboardRepository(IAppSettingsService appSettings, IReaderToChart readerToChart, IReaderToCard readerToCard){
+        private IChartMapper _chartMapper;
+        private ICardMapper _cardMapper;
+        private ITicketPromedioCardMapper _ticketPromedioCardMapper;
+        private IProduccionCardMapper _produccionCardMapper;
+        private IAnulacionMapper _anulacionMapper;
+        public DashboardRepository(IAppSettingsService appSettings, 
+        IChartMapper chartMapper, ICardMapper cardMapper
+        , ITicketPromedioCardMapper ticketPromedioCardMapper
+        , IProduccionCardMapper produccionCardMapper, IAnulacionMapper anulacionMapper){
             _dbSettings = appSettings.GetDatabaseSettings();
-            _readerToChart = readerToChart;
-            _readerToCard = readerToCard;
+            _chartMapper = chartMapper;
+            _cardMapper = cardMapper;
+            _ticketPromedioCardMapper = ticketPromedioCardMapper;
+            _produccionCardMapper = produccionCardMapper;
+            _anulacionMapper = anulacionMapper;
         }
 
         public async Task<Dashboard> GetDashboardAsync(){
@@ -25,13 +33,16 @@ namespace Repositories {
                 var P2 = helper.ExecDataReaderAsync("USP_DASHBOARD_VENTA_ANUAL");
                 var P3 = helper.ExecDataReaderAsync("USP_DASHBOARD_VENTA_DEL_DIA");
                 var P4 = helper.ExecDataReaderAsync("USP_DASHBOARD_PAX_DEL_DIA");
+                var P5 = helper.ExecDataReaderAsync("USP_DASHBOARD_ANULACIONES");
 
-                var readers = await Task.WhenAll(P1, P2, P3, P4);
+                var readers = await Task.WhenAll(P1, P2, P3, P4, P5);
 
-                dashboard.cards.Add("PRODUCCION_DIA", _readerToCard.Map<double>(readers[0]));
-                dashboard.charts.Add(_readerToChart.Map(readers[1], "VENTAS", "Ventas Anuales"));
-                dashboard.cards.Add("VENTA_DIA", _readerToCard.Map<double>(readers[2]));
-                dashboard.cards.Add("PAX_DIA",_readerToCard.Map<int>(readers[3]));
+                dashboard.charts.Add(_chartMapper.Map(readers[1], "VENTAS", "Ventas Anuales"));
+                dashboard.cards.Add("PRODUCCION_DIA", _produccionCardMapper.Map(readers[0]));
+                dashboard.cards.Add("VENTA_DIA", _cardMapper.Map<double>(readers[2]));
+                dashboard.cards.Add("PAX_DIA",_cardMapper.Map<int>(readers[3]));
+                dashboard.cards.Add("TICKET_PROMEDIO_DIA",_ticketPromedioCardMapper.Map((ProduccionCard)dashboard.cards["PRODUCCION_DIA"], dashboard.cards["PAX_DIA"]));
+                dashboard.anulaciones = _anulacionMapper.Map(readers[4]);
             }
 
             return dashboard;

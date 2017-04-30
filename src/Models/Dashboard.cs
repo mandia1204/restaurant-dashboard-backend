@@ -4,5 +4,6 @@ namespace Models{
     public class Dashboard {
         public List<Chart> charts {get; set;}
         public Dictionary<string, Card> cards {get; set;}
+        public List<Anulacion> anulaciones {get; set;}
     }
 }

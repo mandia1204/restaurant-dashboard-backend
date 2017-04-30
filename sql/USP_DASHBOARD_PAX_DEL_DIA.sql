@@ -29,8 +29,7 @@ DECLARE @day INT
 SET @date = GETDATE()
 SELECT @year =YEAR(@date), @month=MONTH(@date), @day= DAY(@date)
 --NADULTO:smallint
-SELECT ISNULL(SUM(NADULTO),0) AS total, 
-	  'Pax del día' AS title  
+SELECT ISNULL(SUM(NADULTO),0) AS total
 FROM dbo.MPEDIDO
 WHERE tEstadoPedido!='03' 
 	AND YEAR(fRegistro) = @year 

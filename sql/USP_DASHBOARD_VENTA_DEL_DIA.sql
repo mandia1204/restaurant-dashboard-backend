@@ -30,8 +30,7 @@ SET @date = GETDATE()
 
 SELECT @year =YEAR(@date), @month=MONTH(@date), @day= DAY(@date)
 --NVENTA:FLOAT
-SELECT ISNULL(SUM(NVENTA),0) total,
-	'Ventas del día' AS title
+SELECT ISNULL(SUM(NVENTA),0) total
 FROM dbo.MDOCUMENTO
 WHERE tTipoDocumento='01' 
 	AND YEAR(fRegistro) = @year 
