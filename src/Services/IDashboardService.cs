@@ -3,6 +3,6 @@ using Models;
 
 namespace Services{
     public interface IDashboardService{
-        Task<Dashboard> GetDashboardAsync();
+        Task<Dashboard> GetDashboardAsync(DashboardParameters pars);
     }
 }

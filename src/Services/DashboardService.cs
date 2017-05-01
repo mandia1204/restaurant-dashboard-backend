@@ -10,8 +10,8 @@ namespace Services{
         public DashboardService(IDashboardRepository repository){
             _repository = repository;
         }
-        public Task<Dashboard> GetDashboardAsync(){
-            return _repository.GetDashboardAsync();
+        public Task<Dashboard> GetDashboardAsync(DashboardParameters pars){
+            return _repository.GetDashboardAsync(pars);
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
+using System;
 
 namespace restaurant_dashboard_backend.Controllers
 {
@@ -18,9 +19,9 @@ namespace restaurant_dashboard_backend.Controllers
 
         // GET api/dashboard
         [HttpGet]
-        public Task<Dashboard> Get()
+        public Task<Dashboard> Get(DashboardParameters pars)
         {
-            return _service.GetDashboardAsync();
+            return _service.GetDashboardAsync(pars);
         }
     }
 }
