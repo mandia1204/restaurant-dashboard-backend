@@ -19,7 +19,7 @@ namespace Repositories.Mappers {
                 list.Add(new Anulacion {
                     fecha= r.GetDateTime(0).ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture),
                     observacion= r.SafeGetString(1).ToLower(),
-                    tipo= r.SafeGetString(2).ToLower()
+                    tipo= Constants.MotivosEliminacion[r.SafeGetString(2)]
                 });
             }
 
@@ -36,7 +36,7 @@ namespace Repositories.Mappers {
                 for(var x=0; x<5; x++) {
                     var current = string.Format("00{0}", x);
                     var val = r.GetInt32(r.GetOrdinal(current));
-                    itemData.Add(current,val);
+                    itemData.Add(Constants.MotivosEliminacion[current],val);
                 }
             }
 

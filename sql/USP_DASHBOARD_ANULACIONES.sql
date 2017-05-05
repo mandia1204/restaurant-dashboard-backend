@@ -23,9 +23,9 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT TOP 10 
-	a.fRegistroAnulado, a.tObservacion,t.tDetallado
+	a.fRegistroAnulado, a.tObservacion,a.tMotivoEliminacion
 FROM APEDIDO a
-INNER JOIN TTABLA t ON t.TCODIGO=a.tMotivoEliminacion AND t.TTABLA='MOTIVOELIMINACION'   
+--INNER JOIN TTABLA t ON t.TCODIGO=a.tMotivoEliminacion AND t.TTABLA='MOTIVOELIMINACION'   
 WHERE tMotivoEliminacion <> '' 
 ORDER BY a.fRegistroAnulado DESC
 

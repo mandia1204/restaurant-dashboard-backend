@@ -16,15 +16,16 @@ GO
 SET QUOTED_IDENTIFIER OFF
 GO
 
-
+--[USP_DASHBOARD_VENTA_ANUAL] 2016
 CREATE Procedure [dbo].[USP_DASHBOARD_VENTA_ANUAL]
+@YEAR INT 
 AS
 BEGIN
 
 set nocount on
 
 SELECT MONTH(fRegistro) mes,SUM(nventa) total FROM dbo.MDOCUMENTO
-WHERE tTipoDocumento= '01' AND YEAR(fRegistro)='2017'
+WHERE tTipoDocumento= '01' AND YEAR(fRegistro)=@YEAR
 GROUP BY MONTH(fRegistro)
 
 END
