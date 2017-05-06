@@ -53,10 +53,11 @@ namespace Repositories {
             });
             return funcs;
         }
+
         public async Task<Dashboard> GetDashboardAsync(DashboardParameters pars) {
 
             var queries = pars.ops.Split(','); //"PDD,VA,VDD,PXD,ANL,ANM"
-            var dashboard = new Dashboard { charts = new List<Chart>(), cards = new Dictionary<string, Card>(), anulaciones = new List<Anulacion>()};
+            var dashboard = new Dashboard { charts = new List<Chart>(), cards = new Dictionary<string, Card>()};
             using(var helper = new AdoHelper(_dbSettings)){
                 var dataFuncs = GetDataFunctions(helper, pars);
                 var readerTaskList = new List<Task<SqlDataReader>>();
