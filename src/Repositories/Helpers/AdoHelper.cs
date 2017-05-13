@@ -29,6 +29,7 @@ namespace Repositories.Helpers {
         {
             _connString = string.Format(@"Data Source={0}; Initial Catalog={1}; User id={2}; Password={3};MultipleActiveResultSets=True;"
             , settings.dataSource, settings.initialCatalog, settings.userId, settings.password);
+            //Console.WriteLine(_connString);
             Connect();
         }
 

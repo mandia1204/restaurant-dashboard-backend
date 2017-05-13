@@ -37,8 +37,8 @@ namespace restaurant_dashboard_backend
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
-            services.AddSingleton<IDashboardRepository, DashboardRepository>();
-            //services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
+            //services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
             services.AddSingleton<IChartMapper, ChartMapper>();
             services.AddSingleton<ICardMapper, CardMapper>();
             services.AddSingleton<IProduccionCardMapper, ProduccionCardMapper>();
