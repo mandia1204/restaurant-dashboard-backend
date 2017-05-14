@@ -57,6 +57,42 @@ namespace Repositories.Mocks {
                                     }
                             }
                         }
+                    },new Chart {
+                            name= "MOZO_DEL_MES",
+                            data = new Dictionary<string, Dictionary<string, int>> {
+                                { "Mayo", new  Dictionary<string, int>
+                                    {
+                                        {"marcos", 100 },
+                                        {"salvatore", 90 },
+                                        {"maria", 80},
+                                        {"juan", 70 },
+                                        {"carmen", 60 },
+                                        {"josue", 50 },
+                                        {"francisco", 40 },
+                                        {"miguel", 30 },
+                                        {"karla", 20 },
+                                        {"norma", 10 }
+                                    }
+                            }
+                        }
+                    },new Chart {
+                            name= "PLATOS_VENDIDOS_DEL_MES",
+                            data = new Dictionary<string, Dictionary<string, int>> {
+                                { "Mayo", new  Dictionary<string, int>
+                                    {
+                                        {"ceviche", 1500 },
+                                        {"causa", 1200 },
+                                        {"papa rellena", 1000},
+                                        {"seco de carne", 900 },
+                                        {"lomo saltado", 870 },
+                                        {"aji de gallina", 850 },
+                                        {"spaguetti alfredo", 750 },
+                                        {"huancaina", 700 },
+                                        {"ensalada mixta", 300 },
+                                        {"salchipapa", 150 }
+                                    }
+                            }
+                        }
                     }
                   },//end charts
                   cards = new Dictionary<string, Card> {
