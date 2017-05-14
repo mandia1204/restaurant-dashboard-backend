@@ -8,7 +8,7 @@ namespace Repositories.Mocks {
     public class DashboardRepositoryMock : IDashboardRepository{
         public async Task<Dashboard> GetDashboardAsync(DashboardParameters pars){
             Dashboard dashboard = null;
-            var date = DateTime.Now.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            var date = DateTime.Now.ToString("dd/MM HH:mm", CultureInfo.InvariantCulture);
             var task = Task.Run(() => {
                 dashboard = new Dashboard {
                     charts = new List<Chart>{
@@ -67,11 +67,11 @@ namespace Repositories.Mocks {
                                         {"maria", 80},
                                         {"juan", 70 },
                                         {"carmen", 60 },
-                                        {"josue", 50 },
-                                        {"francisco", 40 },
-                                        {"miguel", 30 },
-                                        {"karla", 20 },
-                                        {"norma", 10 }
+                                        // {"josue", 50 },
+                                        // {"francisco", 40 }
+                                        // {"miguel", 30 },
+                                        // {"karla", 20 },
+                                        // {"norma", 10 }
                                     }
                             }
                         }
@@ -85,11 +85,11 @@ namespace Repositories.Mocks {
                                         {"papa rellena", 1000},
                                         {"seco de carne", 900 },
                                         {"lomo saltado", 870 },
-                                        {"aji de gallina", 850 },
-                                        {"spaguetti alfredo", 750 },
-                                        {"huancaina", 700 },
-                                        {"ensalada mixta", 300 },
-                                        {"salchipapa", 150 }
+                                        // {"aji de gallina", 850 },
+                                        // {"spaguetti alfredo", 750 }
+                                        // {"huancaina", 700 },
+                                        // {"ensalada mixta", 300 },
+                                        // {"salchipapa", 150 }
                                     }
                             }
                         }
@@ -108,7 +108,7 @@ namespace Repositories.Mocks {
                       new Anulacion { fecha = date, tipo= "otro", observacion="Un problema con la cuenta."},
                       new Anulacion { fecha = date, tipo= "digitación", observacion="No se escribió bien."},
                       new Anulacion { fecha = date, tipo= "otro", observacion="Cliente no le gustó la comida. Solicitó el cambio o de lo contrario no iba a cancelar su cuenta, se tuvo que acceder a su petición."},
-                      new Anulacion { fecha = date, tipo= "falta producción", observacion="No llegó el camión a tiempo."},
+                      new Anulacion { fecha = date, tipo= "producción", observacion="No llegó el camión a tiempo."},
                       new Anulacion { fecha = date, tipo= "digitación", observacion=""},
                       new Anulacion { fecha = date, tipo= "derrame", observacion=""},
                       new Anulacion { fecha = date, tipo= "cambio", observacion="Se confundió de plato."},
