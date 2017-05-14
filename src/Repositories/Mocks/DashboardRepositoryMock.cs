@@ -35,13 +35,25 @@ namespace Repositories.Mocks {
                         new Chart {
                             name= "ANULACIONES_DEL_MES",
                             data = new Dictionary<string, Dictionary<string, int>> {
-                                { "Octubre", new  Dictionary<string, int>
+                                { "Mayo", new  Dictionary<string, int>
                                     {
                                         {"otro", 15 },
                                         {"digitación", 20 },
                                         {"falta producción", 6},
                                         {"derrame", 10 },
                                         {"cambio", 16 }
+                                    }
+                            }
+                        }
+                    },new Chart {
+                            name= "PRODUCTOS_VENDIDOS_DEL_MES",
+                            data = new Dictionary<string, Dictionary<string, int>> {
+                                { "Mayo", new  Dictionary<string, int>
+                                    {
+                                        {"alimentos", 4500 },
+                                        {"bebidas", 1000 },
+                                        {"postres", 800},
+                                        {"otros", 200 }
                                     }
                             }
                         }
