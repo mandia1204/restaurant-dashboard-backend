@@ -52,6 +52,8 @@ namespace restaurant_dashboard_backend
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
+
             app.UseCors(builder =>
                 {
                     builder.AllowAnyHeader();
@@ -62,9 +64,10 @@ namespace restaurant_dashboard_backend
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions()
             {
+                Audience = securitySettings.audience,
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
-                TokenValidationParameters = GetTokenValidationParameters()
+                TokenValidationParameters = GetTokenValidationParameters(securitySettings),
                 // Events = new JwtBearerEvents {
                 //     OnAuthenticationFailed = context =>
                 //     {
@@ -81,20 +84,22 @@ namespace restaurant_dashboard_backend
             app.UseMvc();
         }
 
-        private SymmetricSecurityKey GetSigningKey() {
-            var secretKey = "Th1s1sth3endBeatuf@frieND823762873";
+        private SymmetricSecurityKey GetSigningKey(SecuritySettings settings) {
+            var secretKey = settings.secretKey;
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
             return signingKey;
         }
 
-        private TokenValidationParameters GetTokenValidationParameters(){
+        private TokenValidationParameters GetTokenValidationParameters(SecuritySettings settings){
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = GetSigningKey(),
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                IssuerSigningKey = GetSigningKey(settings),
+                ValidateIssuer = true,
+                ValidIssuer = settings.issuer,
+                // ValidateAudience = true,
+                // ValidAudience =settings.audience,
                 ValidateLifetime =false
             };
             return tokenValidationParameters;
