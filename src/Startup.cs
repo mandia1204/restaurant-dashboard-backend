@@ -98,9 +98,9 @@ namespace restaurant_dashboard_backend
                 IssuerSigningKey = GetSigningKey(settings),
                 ValidateIssuer = true,
                 ValidIssuer = settings.issuer,
+                ValidateLifetime =true
                 // ValidateAudience = true,
                 // ValidAudience =settings.audience,
-                ValidateLifetime =false
             };
             return tokenValidationParameters;
         }
