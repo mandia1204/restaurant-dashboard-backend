@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore;
 
 namespace restaurant_dashboard_backend
 {
@@ -10,31 +11,23 @@ namespace restaurant_dashboard_backend
     {
         public static void Main(string[] args)
         {
-            var config = new ConfigurationBuilder()  
-            .SetBasePath(GetContentRoot())
-            .AddJsonFile("hosting.json", optional: true)
-            .Build();
+            BuildWebHost(args).Run();
+        }
 
-            var host = new WebHostBuilder()
-                .UseConfiguration(config)
-                .UseKestrel()
-                .UseContentRoot(GetContentRoot())
-                .UseIISIntegration()
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
 
-            host.Run();
-        }
+        // private static string GetContentRoot() {
+        //     var root = Directory.GetCurrentDirectory();
+        //     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-        private static string GetContentRoot() {
-            var root = Directory.GetCurrentDirectory();
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        //     if(env == "production") {
+        //         root += "/dist";
+        //     }
 
-            if(env == "production") {
-                root += "/dist";
-            }
-
-            return root;
-        }
+        //     return root;
+        // }
     }
 }
