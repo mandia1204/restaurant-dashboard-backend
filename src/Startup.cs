@@ -11,6 +11,7 @@ using Repositories.Mappers;
 using Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Repositories.Interfaces;
 
 namespace restaurant_dashboard_backend
 {
@@ -45,13 +46,15 @@ namespace restaurant_dashboard_backend
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<IDashboardService, DashboardService>();
-            //services.AddSingleton<IDashboardRepository, DashboardRepository>();
-            services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
+            services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            //services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
             services.AddSingleton<IChartMapper, ChartMapper>();
             services.AddSingleton<ICardMapper, CardMapper>();
             services.AddSingleton<IProduccionCardMapper, ProduccionCardMapper>();
             services.AddSingleton<ITicketPromedioCardMapper, TicketPromedioCardMapper>();
             services.AddSingleton<IAnulacionMapper, AnulacionMapper>();
+
+            services.AddSingleton<IDashboardReader, DashboardReader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
