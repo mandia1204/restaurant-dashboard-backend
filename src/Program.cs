@@ -17,17 +17,20 @@ namespace restaurant_dashboard_backend
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseContentRoot(GetContentRoot())
                 .Build();
 
-        // private static string GetContentRoot() {
-        //     var root = Directory.GetCurrentDirectory();
-        //     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        private static string GetContentRoot() {
+            var root = Directory.GetCurrentDirectory();
+            Console.WriteLine("root:{0}", root);
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine("env:{0}", env);
+            
+            if(env == "production") {
+                root += "\\backend";
+            }
 
-        //     if(env == "production") {
-        //         root += "/dist";
-        //     }
-
-        //     return root;
-        // }
+            return root;
+        }
     }
 }
