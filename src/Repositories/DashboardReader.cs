@@ -32,6 +32,9 @@ namespace Repositories {
             funcs.Add(Ops.AnulacionesMes, () => {
                 return helper.ExecDataReaderAsync("USP_DASHBOARD_ANULACIONES_DEL_MES", CommandType.StoredProcedure, "@YEAR", pars.anio, "@MONTH", pars.mes);
             });
+            funcs.Add(Ops.ProductosVendidosMes, () => {
+                return helper.ExecDataReaderAsync("USP_DASHBOARD_PRODUCTOS_VENTAS_MES", CommandType.StoredProcedure, "@YEAR", pars.anio, "@MONTH", pars.mes);
+            });
             return funcs;
         }
         public Dictionary<string, Task<SqlDataReader>> GetReaders(AdoHelper helper, DashboardParameters pars) {

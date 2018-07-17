@@ -6,25 +6,24 @@ using Util;
 namespace Repositories.Mappers {
     public interface IChartMapper
     {
-        Chart Map(SqlDataReader r, string chartName, List<string> dataHeaders);
+        Chart Map<T>(SqlDataReader r, string chartName, List<string> dataHeaders, Dictionary<T, string> valueMapper);
     }
     public class ChartMapper: IChartMapper {
-        public Chart Map(SqlDataReader r, string chartName, List<string> dataHeaders) {
+        
+      public Chart Map<T>(SqlDataReader r, string chartName, List<string> dataHeaders, Dictionary<T, string> valueMapper) {
             var data = new Dictionary<string, Dictionary<string, int>>();
             var chart = new Chart{ name = chartName} ;
 
             dataHeaders.ForEach(h => {
                 var itemData = new Dictionary<string, int>();
-
                 while (r.Read()){
-                    itemData.Add(Constants.Meses[r.GetInt32(0)], (int)r.GetDouble(1));
+                    itemData.Add(valueMapper[r.GetFieldValue<T>(0)], (int)r.GetDouble(1));
                  }
 
                 data.Add(h, itemData);
             });
 
             chart.data = data;
-
             return chart;
       }
     }

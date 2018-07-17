@@ -13,7 +13,10 @@ namespace Util
             {"000", "otro" }, {"001", "digitación" }, {"002", "producción" }, {"003", "derrame" }, {"004", "cambio" }
         };
 
-
+        public static readonly Dictionary<string, string> TiposDeProducto= new Dictionary<string, string>()
+        {
+            {"01","Alimentos" },{"02","Bebidas" },{"03","Marketing" },{"04","Otros" }
+        };
     }
     public static class Ops
     {
@@ -23,5 +26,6 @@ namespace Util
         public const string PaxDia = "PXD";
         public const string Anulaciones = "ANL";
         public const string AnulacionesMes = "ANM";
+        public const string ProductosVendidosMes = "PVM";
     }
 }
