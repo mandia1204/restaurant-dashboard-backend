@@ -10,16 +10,16 @@ namespace Repositories.Helpers {
     public class AdoHelper : IDisposable
     {
         // Internal members
-        protected string _connString = null;
-        protected SqlConnection _conn = null;
-        protected SqlTransaction _trans = null;
-        protected bool _disposed = false;
+        protected string connString = null;
+        protected SqlConnection conn = null;
+        protected SqlTransaction trans = null;
+        protected bool disposed = false;
 
         /// <summary>
         /// Returns the current SqlTransaction object or null if no transaction
         /// is in effect.
         /// </summary>
-        public SqlTransaction Transaction { get { return _trans; } }
+        public SqlTransaction Transaction { get { return trans; } }
 
         /// <summary>
         /// Constructure using connection string override
@@ -27,7 +27,7 @@ namespace Repositories.Helpers {
         /// <param name="connString">Connection string for this instance</param>
         public AdoHelper(DatabaseSettings settings)
         {
-            _connString = string.Format(@"Data Source={0}; Initial Catalog={1}; User id={2}; Password={3};MultipleActiveResultSets=True;"
+            connString = string.Format(@"Data Source={0}; Initial Catalog={1}; User id={2}; Password={3};MultipleActiveResultSets=True;"
             , settings.dataSource, settings.initialCatalog, settings.userId, settings.password);
             //Console.WriteLine(_connString);
             Connect();
@@ -36,8 +36,8 @@ namespace Repositories.Helpers {
         // Creates a SqlConnection using the current connection string
         protected void Connect()
         {
-            _conn = new SqlConnection(_connString);
-            _conn.Open();
+            conn = new SqlConnection(connString);
+            conn.Open();
         }
 
         /// <summary>
@@ -53,11 +53,11 @@ namespace Repositories.Helpers {
         /// <returns></returns>
         public SqlCommand CreateCommand(string qry, CommandType type, params object[] args)
         {
-            SqlCommand cmd = new SqlCommand(qry, _conn);
+            SqlCommand cmd = new SqlCommand(qry, conn);
 
             // Associate with current transaction, if any
-            if (_trans != null)
-                cmd.Transaction = _trans;
+            if (trans != null)
+                cmd.Transaction = trans;
 
             // Set command type
             cmd.CommandType = type;
@@ -86,8 +86,8 @@ namespace Repositories.Helpers {
             SqlCommand cmd = new SqlCommand(qry, connection);
 
             // Associate with current transaction, if any
-            if (_trans != null)
-                cmd.Transaction = _trans;
+            if (trans != null)
+                cmd.Transaction = trans;
 
             // Set command type
             cmd.CommandType = type;
@@ -153,7 +153,7 @@ namespace Repositories.Helpers {
         public SqlTransaction BeginTransaction()
         {
             Rollback();
-            _trans = _conn.BeginTransaction();
+            trans = conn.BeginTransaction();
             return Transaction;
         }
 
@@ -162,10 +162,10 @@ namespace Repositories.Helpers {
         /// </summary>
         public void Commit()
         {
-            if (_trans != null)
+            if (trans != null)
             {
-                _trans.Commit();
-                _trans = null;
+                trans.Commit();
+                trans = null;
             }
         }
 
@@ -174,10 +174,10 @@ namespace Repositories.Helpers {
         /// </summary>
         public void Rollback()
         {
-            if (_trans != null)
+            if (trans != null)
             {
-                _trans.Rollback();
-                _trans = null;
+                trans.Rollback();
+                trans = null;
             }
         }
 
@@ -193,19 +193,19 @@ namespace Repositories.Helpers {
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!disposed)
             {
                 // Need to dispose managed resources if being called manually
                 if (disposing)
                 {
-                    if (_conn != null)
+                    if (conn != null)
                     {
                         Rollback();
-                        _conn.Dispose();
-                        _conn = null;
+                        conn.Dispose();
+                        conn = null;
                     }
                 }
-                _disposed = true;
+                disposed = true;
             }
         }
 

@@ -5,15 +5,15 @@ namespace Services
 {   
     public class AppSettingsService : IAppSettingsService
     {
-        private DatabaseSettings _dbSettings;
+        private DatabaseSettings dbSettings;
         public AppSettingsService(IOptions<DatabaseSettings> dbSettings)
         {
-           _dbSettings = dbSettings.Value;
+           this.dbSettings = dbSettings.Value;
         }
 
         public DatabaseSettings GetDatabaseSettings()
         {
-            return _dbSettings;
+            return dbSettings;
         }
     }
 }

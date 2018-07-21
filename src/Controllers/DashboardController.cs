@@ -11,17 +11,17 @@ namespace restaurant_dashboard_backend.Controllers
     [Route("api/[controller]")]
     public class DashboardController : Controller
     {
-        private IDashboardService _service;
+        private IDashboardService service;
 
         public DashboardController(IDashboardService service){
-            _service = service;
+            this.service = service;
         }
 
         // GET api/dashboard
         [HttpGet]
         public Task<Dashboard> Get(DashboardParameters pars)
         {
-            return _service.GetDashboardAsync(pars);
+            return service.GetDashboardAsync(pars);
         }
     }
 }

@@ -5,13 +5,13 @@ using Repositories;
 namespace Services{
     public class DashboardService: IDashboardService {
         
-        private IDashboardRepository _repository;
+        private IDashboardRepository repository;
 
         public DashboardService(IDashboardRepository repository){
-            _repository = repository;
+            this.repository = repository;
         }
         public Task<Dashboard> GetDashboardAsync(DashboardParameters pars){
-            return _repository.GetDashboardAsync(pars);
+            return repository.GetDashboardAsync(pars);
         }
     }
 }
