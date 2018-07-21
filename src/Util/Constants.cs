@@ -27,5 +27,6 @@ namespace Util
         public const string Anulaciones = "ANL";
         public const string AnulacionesMes = "ANM";
         public const string ProductosVendidosMes = "PVM";
+        public const string ProductosMasVendidosMes = "PMV";
     }
 }

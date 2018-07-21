@@ -29,8 +29,8 @@ namespace Repositories.Mappers {
         public Chart MapMensual(SqlDataReader r, string chartName, int mes) {
             var chart = new Chart{ name = chartName} ;
 
-            var data = new Dictionary<string, Dictionary<string, int>>();
-            var itemData = new Dictionary<string, int>() ;
+            var data = new Dictionary<string, Dictionary<string, object>>();
+            var itemData = new Dictionary<string, object>() ;
             
             while (r.Read()){
                 for(var x=0; x<5; x++) {

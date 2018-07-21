@@ -37,14 +37,18 @@ namespace Repositories {
                 await Task.WhenAll(readerDictionary.Values);
 
                 if(readerDictionary.ContainsKey(Ops.VentaAnual)) {
-                    var chart = chartMapper.Map<int>(readerDictionary[Ops.VentaAnual].Result, "VENTAS_ANUALES", new List<string>{pars.anio.ToString()}, Constants.Meses);
+                    var chart = chartMapper.Map<int, double>(readerDictionary[Ops.VentaAnual].Result, "VENTAS_ANUALES", new List<string>{pars.anio.ToString()}, Constants.Meses);
                     dashboard.charts.Add(chart);
                 }
                 if(readerDictionary.ContainsKey(Ops.AnulacionesMes)) {
                     dashboard.charts.Add(anulacionMapper.MapMensual(readerDictionary[Ops.AnulacionesMes].Result, "ANULACIONES_DEL_MES", pars.mes));
                 }
                 if(readerDictionary.ContainsKey(Ops.ProductosVendidosMes)) {
-                    var chart = chartMapper.Map<string>(readerDictionary[Ops.ProductosVendidosMes].Result, "PRODUCTOS_VENDIDOS_DEL_MES", new List<string>{pars.mes.ToString()}, Constants.TiposDeProducto);
+                    var chart = chartMapper.Map<string, double>(readerDictionary[Ops.ProductosVendidosMes].Result, "PRODUCTOS_VENDIDOS_DEL_MES", new List<string>{pars.mes.ToString()}, Constants.TiposDeProducto);
+                    dashboard.charts.Add(chart);
+                }
+                if(readerDictionary.ContainsKey(Ops.ProductosMasVendidosMes)) {
+                    var chart = chartMapper.Map<string, int>(readerDictionary[Ops.ProductosMasVendidosMes].Result, "PLATOS_MAS_VENDIDOS_DEL_MES", new List<string>{pars.mes.ToString()}, null);
                     dashboard.charts.Add(chart);
                 }
                 if(readerDictionary.ContainsKey(Ops.ProduccionDia)) {

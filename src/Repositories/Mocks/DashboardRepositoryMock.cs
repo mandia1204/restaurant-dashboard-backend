@@ -14,8 +14,8 @@ namespace Repositories.Mocks {
                     charts = new List<Chart>{
                         new Chart {
                             name= "VENTAS_ANUALES",
-                            data = new Dictionary<string, Dictionary<string, int>> {
-                                { "2016", new  Dictionary<string, int>{
+                            data = new Dictionary<string, Dictionary<string, object>> {
+                                { "2016", new  Dictionary<string, object>{
                                         {"Septiembre", 70611},
                                         {"Marzo", 42356     },
                                         {"Diciembre", 66843 },
@@ -34,8 +34,8 @@ namespace Repositories.Mocks {
                         },
                         new Chart {
                             name= "ANULACIONES_DEL_MES",
-                            data = new Dictionary<string, Dictionary<string, int>> {
-                                { "Mayo", new  Dictionary<string, int>
+                            data = new Dictionary<string, Dictionary<string, object>> {
+                                { "Mayo", new  Dictionary<string, object>
                                     {
                                         {"otro", 15 },
                                         {"digitación", 20 },
@@ -47,8 +47,8 @@ namespace Repositories.Mocks {
                         }
                     },new Chart {
                             name= "PRODUCTOS_VENDIDOS_DEL_MES",
-                            data = new Dictionary<string, Dictionary<string, int>> {
-                                { "Mayo", new  Dictionary<string, int>
+                            data = new Dictionary<string, Dictionary<string, object>> {
+                                { "Mayo", new  Dictionary<string, object>
                                     {
                                         {"alimentos", 4500 },
                                         {"bebidas", 1000 },
@@ -59,8 +59,8 @@ namespace Repositories.Mocks {
                         }
                     },new Chart {
                             name= "MOZO_DEL_MES",
-                            data = new Dictionary<string, Dictionary<string, int>> {
-                                { "Mayo", new  Dictionary<string, int>
+                            data = new Dictionary<string, Dictionary<string, object>> {
+                                { "Mayo", new  Dictionary<string, object>
                                     {
                                         {"marcos", 100 },
                                         {"salvatore", 90 },
@@ -77,8 +77,8 @@ namespace Repositories.Mocks {
                         }
                     },new Chart {
                             name= "PLATOS_VENDIDOS_DEL_MES",
-                            data = new Dictionary<string, Dictionary<string, int>> {
-                                { "Mayo", new  Dictionary<string, int>
+                            data = new Dictionary<string, Dictionary<string, object>> {
+                                { "Mayo", new  Dictionary<string, object>
                                     {
                                         {"ceviche", 1500 },
                                         {"causa", 1200 },
