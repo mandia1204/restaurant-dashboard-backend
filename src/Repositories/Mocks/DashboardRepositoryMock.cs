@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Models;
+using Util;
 
 namespace Repositories.Mocks {
     public class DashboardRepositoryMock : IDashboardRepository{
@@ -13,7 +14,7 @@ namespace Repositories.Mocks {
                 dashboard = new Dashboard {
                     charts = new List<Chart>{
                         new Chart {
-                            name= "VENTAS_ANUALES",
+                            name= Charts.VentasAnuales,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "2016", new  Dictionary<string, object>{
                                         {"Septiembre", 70611},
@@ -33,7 +34,7 @@ namespace Repositories.Mocks {
                             }
                         },
                         new Chart {
-                            name= "ANULACIONES_DEL_MES",
+                            name= Charts.AnulacionesDelMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
                                     {
@@ -46,7 +47,7 @@ namespace Repositories.Mocks {
                             }
                         }
                     },new Chart {
-                            name= "PRODUCTOS_VENDIDOS_DEL_MES",
+                            name= Charts.ProductosVendidosMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
                                     {
@@ -58,7 +59,7 @@ namespace Repositories.Mocks {
                             }
                         }
                     },new Chart {
-                            name= "MOZO_DEL_MES",
+                            name= Charts.MozoDelMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
                                     {
@@ -67,16 +68,16 @@ namespace Repositories.Mocks {
                                         {"maria", 80},
                                         {"juan", 70 },
                                         {"carmen", 60 },
-                                        // {"josue", 50 },
-                                        // {"francisco", 40 }
-                                        // {"miguel", 30 },
-                                        // {"karla", 20 },
-                                        // {"norma", 10 }
+                                        {"josue", 50 },
+                                        {"francisco", 40 },
+                                        {"miguel", 30 },
+                                        {"karla", 20 },
+                                        {"norma", 10 }
                                     }
                             }
                         }
                     },new Chart {
-                            name= "PLATOS_VENDIDOS_DEL_MES",
+                            name= Charts.PlatosMasVendidosMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
                                     {
@@ -85,21 +86,21 @@ namespace Repositories.Mocks {
                                         {"papa rellena", 1000},
                                         {"seco de carne", 900 },
                                         {"lomo saltado", 870 },
-                                        // {"aji de gallina", 850 },
-                                        // {"spaguetti alfredo", 750 }
-                                        // {"huancaina", 700 },
-                                        // {"ensalada mixta", 300 },
-                                        // {"salchipapa", 150 }
+                                        {"aji de gallina", 850 },
+                                        {"spaguetti alfredo", 750 },
+                                        {"huancaina", 700 },
+                                        {"ensalada mixta", 300 },
+                                        {"salchipapa", 150 }
                                     }
                             }
                         }
                     }
                   },//end charts
                   cards = new Dictionary<string, Card> {
-                      {"PRODUCCION_DIA", new Card { value= "2500"}},
-                      {"VENTA_DIA", new Card { value= "1500"}},
-                      {"PAX_DIA", new Card { value= "58"}},
-                      {"TICKET_PROMEDIO_DIA", new Card { value= "177"}}
+                      {Cards.ProduccionDia, new Card { value= "2500"}},
+                      {Cards.VentaDia, new Card { value= "1500"}},
+                      {Cards.PaxDia, new Card { value= "58"}},
+                      {Cards.TicketPromedioDia, new Card { value= "177"}}
                   },
                   anulaciones = new List<Anulacion> {
                       new Anulacion { fecha = date, tipo= "otro", observacion=""},

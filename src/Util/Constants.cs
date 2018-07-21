@@ -27,6 +27,21 @@ namespace Util
         public const string Anulaciones = "ANL";
         public const string AnulacionesMes = "ANM";
         public const string ProductosVendidosMes = "PVM";
-        public const string ProductosMasVendidosMes = "PMV";
+        public const string PlatosMasVendidosMes = "PMV";
+    }
+
+    public static class Charts {
+        public const string VentasAnuales = "ventasAnuales";
+        public const string AnulacionesDelMes = "anulacionesDelMes";
+        public const string ProductosVendidosMes = "productosVendidosMes";
+        public const string MozoDelMes = "mozoDelMes";
+        public const string PlatosMasVendidosMes = "platosMasVendidosMes";
+    }
+
+    public static class Cards {
+        public const string ProduccionDia = "produccionDia";
+        public const string VentaDia = "ventaDia";
+        public const string PaxDia = "paxDia";
+        public const string TicketPromedioDia = "ticketPromedioDia";
     }
 }

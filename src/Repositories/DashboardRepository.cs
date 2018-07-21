@@ -37,31 +37,31 @@ namespace Repositories {
                 await Task.WhenAll(readerDictionary.Values);
 
                 if(readerDictionary.ContainsKey(Ops.VentaAnual)) {
-                    var chart = chartMapper.Map<int, double>(readerDictionary[Ops.VentaAnual].Result, "VENTAS_ANUALES", new List<string>{pars.anio.ToString()}, Constants.Meses);
+                    var chart = chartMapper.Map<int, double>(readerDictionary[Ops.VentaAnual].Result, Charts.VentasAnuales, new List<string>{pars.anio.ToString()}, Constants.Meses);
                     dashboard.charts.Add(chart);
                 }
                 if(readerDictionary.ContainsKey(Ops.AnulacionesMes)) {
-                    dashboard.charts.Add(anulacionMapper.MapMensual(readerDictionary[Ops.AnulacionesMes].Result, "ANULACIONES_DEL_MES", pars.mes));
+                    dashboard.charts.Add(anulacionMapper.MapMensual(readerDictionary[Ops.AnulacionesMes].Result, Charts.AnulacionesDelMes, pars.mes));
                 }
                 if(readerDictionary.ContainsKey(Ops.ProductosVendidosMes)) {
-                    var chart = chartMapper.Map<string, double>(readerDictionary[Ops.ProductosVendidosMes].Result, "PRODUCTOS_VENDIDOS_DEL_MES", new List<string>{pars.mes.ToString()}, Constants.TiposDeProducto);
+                    var chart = chartMapper.Map<string, double>(readerDictionary[Ops.ProductosVendidosMes].Result, Charts.ProductosVendidosMes, new List<string>{pars.mes.ToString()}, Constants.TiposDeProducto);
                     dashboard.charts.Add(chart);
                 }
-                if(readerDictionary.ContainsKey(Ops.ProductosMasVendidosMes)) {
-                    var chart = chartMapper.Map<string, int>(readerDictionary[Ops.ProductosMasVendidosMes].Result, "PLATOS_MAS_VENDIDOS_DEL_MES", new List<string>{pars.mes.ToString()}, null);
+                if(readerDictionary.ContainsKey(Ops.PlatosMasVendidosMes)) {
+                    var chart = chartMapper.Map<string, int>(readerDictionary[Ops.PlatosMasVendidosMes].Result, Charts.PlatosMasVendidosMes, new List<string>{pars.mes.ToString()}, null);
                     dashboard.charts.Add(chart);
                 }
                 if(readerDictionary.ContainsKey(Ops.ProduccionDia)) {
-                    dashboard.cards.Add("PRODUCCION_DIA", produccionCardMapper.Map(readerDictionary[Ops.ProduccionDia].Result));
+                    dashboard.cards.Add(Cards.ProduccionDia, produccionCardMapper.Map(readerDictionary[Ops.ProduccionDia].Result));
                 }
                 if(readerDictionary.ContainsKey(Ops.VentaDia)) {
-                    dashboard.cards.Add("VENTA_DIA", cardMapper.Map<double>(readerDictionary[Ops.VentaDia].Result));
+                    dashboard.cards.Add(Cards.VentaDia, cardMapper.Map<double>(readerDictionary[Ops.VentaDia].Result));
                 }
                 if(readerDictionary.ContainsKey(Ops.PaxDia)) {
-                    dashboard.cards.Add("PAX_DIA", cardMapper.Map<int>(readerDictionary[Ops.PaxDia].Result));
+                    dashboard.cards.Add(Cards.PaxDia, cardMapper.Map<int>(readerDictionary[Ops.PaxDia].Result));
                 }
                 if(readerDictionary.ContainsKey(Ops.ProduccionDia) && readerDictionary.ContainsKey(Ops.PaxDia)){
-                    dashboard.cards.Add("TICKET_PROMEDIO_DIA", ticketPromedioCardMapper.Map((ProduccionCard)dashboard.cards["PRODUCCION_DIA"], dashboard.cards["PAX_DIA"]));
+                    dashboard.cards.Add(Cards.TicketPromedioDia, ticketPromedioCardMapper.Map((ProduccionCard)dashboard.cards[Cards.ProduccionDia], dashboard.cards[Cards.PaxDia]));
                 }
                 if(readerDictionary.ContainsKey(Ops.Anulaciones)) {
                     dashboard.anulaciones = anulacionMapper.Map(readerDictionary[Ops.Anulaciones].Result);

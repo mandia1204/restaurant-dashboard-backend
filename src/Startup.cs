@@ -12,6 +12,8 @@ using Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using System;
 
 namespace restaurant_dashboard_backend
 {
@@ -31,8 +33,13 @@ namespace restaurant_dashboard_backend
             // Add framework services.
             services.AddMvc();
 
-            var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
+            // services.AddMvc(opts =>
+            // {
+            //     opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
+            // });
 
+            var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
+            
             services.AddAuthentication(o=>{
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
