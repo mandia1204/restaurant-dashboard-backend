@@ -9,7 +9,6 @@ namespace Repositories.Mappers {
         Chart Map<K, V>(SqlDataReader r, string chartName, List<string> dataHeaders, Dictionary<K, string> valueMapper);
     }
     public class ChartMapper: IChartMapper {
-        
       public Chart Map<K, V>(SqlDataReader r, string chartName, List<string> dataHeaders, Dictionary<K, string> valueMapper) {
             var data = new Dictionary<string, Dictionary<string, object>>();
             var chart = new Chart{ name = chartName} ;

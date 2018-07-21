@@ -14,6 +14,8 @@ using System.Text;
 using Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using System;
+using AutoMapper;
+using System.Data;
 
 namespace restaurant_dashboard_backend
 {
@@ -30,8 +32,8 @@ namespace restaurant_dashboard_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            // Add framework services.
             services.AddMvc();
+            services.AddAutoMapper();
 
             // services.AddMvc(opts =>
             // {
@@ -52,14 +54,14 @@ namespace restaurant_dashboard_backend
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
-            services.AddSingleton<IDashboardService, DashboardService>();
-            services.AddSingleton<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
             //services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
             services.AddSingleton<IChartMapper, ChartMapper>();
             services.AddSingleton<ICardMapper, CardMapper>();
             services.AddSingleton<IProduccionCardMapper, ProduccionCardMapper>();
             services.AddSingleton<ITicketPromedioCardMapper, TicketPromedioCardMapper>();
-            services.AddSingleton<IAnulacionMapper, AnulacionMapper>();
+            services.AddScoped<IAnulacionMapper, AnulacionMapper>();
 
             services.AddSingleton<IDashboardReader, DashboardReader>();
         }
