@@ -22,10 +22,18 @@ CREATE Procedure [dbo].[USP_DASHBOARD_VENTA_ANUAL]
 AS
 BEGIN
 
-set nocount on
+SET NOCOUNT ON
 
-SELECT MONTH(fRegistro) [Key], SUM(nventa) [Value] FROM dbo.MDOCUMENTO
-WHERE tTipoDocumento= '01' AND YEAR(fRegistro)=@YEAR
+DECLARE @date DATETIME
+SET @date = CONVERT(DATE,CONCAT(@YEAR,'-01-01'))
+DECLARE @dateEnd datetime = DATEADD(YEAR, 1, @date);
+
+SELECT 
+    MONTH(fRegistro) [Key], SUM(nventa) [Value] 
+FROM dbo.MDOCUMENTO
+WHERE tTipoDocumento= '01' 
+    AND fRegistro >= @date 
+	AND fRegistro < @dateEnd
 GROUP BY MONTH(fRegistro)
 
 END

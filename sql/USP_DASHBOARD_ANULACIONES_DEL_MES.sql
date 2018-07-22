@@ -24,12 +24,16 @@ AS
 BEGIN
 SET NOCOUNT ON
 
+DECLARE @date DATETIME
+SET @date = CONVERT(DATE,CONCAT(@YEAR,'-',@MONTH,'-01'))
+DECLARE @dateEnd datetime = DATEADD(MONTH, 1, @date);
+
 SELECT
 	tMotivoEliminacion [Key], Count(tMotivoEliminacion) [Value]
 FROM APEDIDO a
 WHERE tMotivoEliminacion <> '' 
-	AND YEAR(fRegistroAnulado) =@YEAR
-	AND MONTH(fRegistroAnulado) = @MONTH
+	AND fRegistroAnulado >= @date 
+	AND fRegistroAnulado < @dateEnd
 GROUP BY tMotivoEliminacion
 
 END

@@ -24,12 +24,17 @@ AS
 BEGIN
 
 set nocount on
+DECLARE @date DATETIME
+SET @date = CONVERT(DATE,CONCAT(@YEAR,'-',@MONTH,'-01'))
+DECLARE @dateEnd datetime = DATEADD(MONTH, 1, @date);
 
 SELECT prod.tTipoProducto [Key], SUM(doc.nVenta) [Value]
 FROM DDOCUMENTO det
 	INNER JOIN MDOCUMENTO doc on doc.tDocumento = det.tDocumento
 	INNER JOIN TPRODUCTO prod on prod.tCodigoProducto = det.tCodigoProducto
-WHERE doc.tTipoDocumento = '01' AND YEAR(doc.fRegistro) = @YEAR AND MONTH(doc.fRegistro)=@MONTH
+WHERE doc.tTipoDocumento = '01' 
+	AND doc.fRegistro >= @date 
+	AND doc.fRegistro< @dateEnd
 GROUP BY prod.tTipoProducto
 
 END

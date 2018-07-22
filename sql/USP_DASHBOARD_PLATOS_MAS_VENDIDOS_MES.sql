@@ -23,14 +23,22 @@ CREATE Procedure [dbo].[USP_DASHBOARD_PLATOS_MAS_VENDIDOS_MES]
 AS
 BEGIN
 
-set nocount on
+SET NOCOUNT ON
+
+DECLARE @date DATETIME
+SET @date = CONVERT(DATE,CONCAT(@YEAR,'-',@MONTH,'-01'))
+DECLARE @dateEnd datetime = DATEADD(MONTH, 1, @date);
 
 SELECT TOP 10
 	prod.tResumido [Key], Count(prod.tResumido) [Value]
 FROM DDOCUMENTO det
 	INNER JOIN MDOCUMENTO doc on doc.tDocumento = det.tDocumento
 	INNER JOIN TPRODUCTO prod on prod.tCodigoProducto = det.tCodigoProducto
-WHERE doc.tTipoDocumento = '01' AND tTipoProducto='01' AND YEAR(doc.fRegistro) = @YEAR AND MONTH(doc.fRegistro)=@MONTH
+WHERE 
+	doc.tTipoDocumento = '01' 
+	AND tTipoProducto='01' 
+	AND doc.fRegistro >= @date 
+	AND doc.fRegistro< @dateEnd
 GROUP BY prod.tResumido
 order by count(prod.tResumido) DESC
 
