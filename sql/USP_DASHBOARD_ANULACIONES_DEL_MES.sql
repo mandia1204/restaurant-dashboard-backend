@@ -25,16 +25,12 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT
-	COUNT(CASE WHEN a.tMotivoEliminacion='000' THEN 1 ELSE NULL END) AS '000',
-	COUNT(CASE WHEN a.tMotivoEliminacion='001' THEN 1 ELSE NULL END) AS '001',
-	COUNT(CASE WHEN a.tMotivoEliminacion='002' THEN 1 ELSE NULL END) AS '002',
-	COUNT(CASE WHEN a.tMotivoEliminacion='003' THEN 1 ELSE NULL END) AS '003',
-	COUNT(CASE WHEN a.tMotivoEliminacion='004' THEN 1 ELSE NULL END) AS '004'
-	
+	tMotivoEliminacion [Key], Count(tMotivoEliminacion) [Value]
 FROM APEDIDO a
 WHERE tMotivoEliminacion <> '' 
 	AND YEAR(fRegistroAnulado) =@YEAR
 	AND MONTH(fRegistroAnulado) = @MONTH
+GROUP BY tMotivoEliminacion
 
 END
 GO

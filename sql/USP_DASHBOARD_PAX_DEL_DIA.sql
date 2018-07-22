@@ -22,19 +22,15 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @date DATETIME
-DECLARE @year INT
-DECLARE @month INT
-DECLARE @day INT
+SET @date = CONVERT(DATE, GETDATE())
+DECLARE @dateEnd datetime = DATEADD(DAY, 1, @date);
 
-SET @date = GETDATE()
-SELECT @year =YEAR(@date), @month=MONTH(@date), @day= DAY(@date)
 --NADULTO:smallint
-SELECT ISNULL(SUM(NADULTO),0) AS total
+SELECT ISNULL(SUM(NADULTO),0) [Value]
 FROM dbo.MPEDIDO
-WHERE tEstadoPedido!='03' 
-	AND YEAR(fRegistro) = @year 
-	AND MONTH(fRegistro)=@month
-	AND DAY(fRegistro)=@day
+WHERE tEstadoPedido!='03' AND
+	fRegistro >= @date 
+	AND fRegistro< @dateEnd
 END
 GO
 

@@ -24,7 +24,7 @@ BEGIN
 
 set nocount on
 
-SELECT MONTH(fRegistro) mes,SUM(nventa) total FROM dbo.MDOCUMENTO
+SELECT MONTH(fRegistro) [Key], SUM(nventa) [Value] FROM dbo.MDOCUMENTO
 WHERE tTipoDocumento= '01' AND YEAR(fRegistro)=@YEAR
 GROUP BY MONTH(fRegistro)
 

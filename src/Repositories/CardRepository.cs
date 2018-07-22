@@ -39,11 +39,11 @@ namespace Repositories
         private Tuple<string, object> GetUspParams(string cardName) {
             switch(cardName) {
                 case Cards.PaxDia:
-                    return new Tuple<string, object>("USP_DASHBOARD_PAX_DEL_DIA_2", null);
+                    return new Tuple<string, object>("USP_DASHBOARD_PAX_DEL_DIA", null);
                 case Cards.VentaDia:
-                    return new Tuple<string, object>("USP_DASHBOARD_VENTA_DEL_DIA_2", null);
+                    return new Tuple<string, object>("USP_DASHBOARD_VENTA_DEL_DIA", null);
                 case Cards.ProduccionDia:
-                    return new Tuple<string, object>("USP_DASHBOARD_PRODUCCION_DEL_DIA_2", null);
+                    return new Tuple<string, object>("USP_DASHBOARD_PRODUCCION_DEL_DIA", null);
                 default:
                     return null;
             }

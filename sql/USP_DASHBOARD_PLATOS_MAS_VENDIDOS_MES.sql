@@ -26,7 +26,7 @@ BEGIN
 set nocount on
 
 SELECT TOP 10
-	prod.tResumido producto, Count(prod.tResumido) total
+	prod.tResumido [Key], Count(prod.tResumido) [Value]
 FROM DDOCUMENTO det
 	INNER JOIN MDOCUMENTO doc on doc.tDocumento = det.tDocumento
 	INNER JOIN TPRODUCTO prod on prod.tCodigoProducto = det.tCodigoProducto

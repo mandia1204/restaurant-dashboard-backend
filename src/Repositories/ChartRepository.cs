@@ -28,13 +28,13 @@ namespace Repositories
         private Tuple<string, object> GetUspParams(string chartName, DashboardParameters pars) {
             switch(chartName) {
                 case Charts.ProductosVendidosMes:
-                    return new Tuple<string, object>("USP_DASHBOARD_PRODUCTOS_VENTAS_MES_2", new { YEAR = pars.anio, MONTH = pars.mes });
+                    return new Tuple<string, object>("USP_DASHBOARD_PRODUCTOS_VENTAS_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 case Charts.PlatosMasVendidosMes:
-                    return new Tuple<string, object>("USP_DASHBOARD_PLATOS_MAS_VENDIDOS_MES_2", new { YEAR = pars.anio, MONTH = pars.mes });
+                    return new Tuple<string, object>("USP_DASHBOARD_PLATOS_MAS_VENDIDOS_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 case Charts.VentasAnuales:
-                    return new Tuple<string, object>("USP_DASHBOARD_VENTA_ANUAL_2", new { YEAR = pars.anio });
+                    return new Tuple<string, object>("USP_DASHBOARD_VENTA_ANUAL", new { YEAR = pars.anio });
                 case Charts.AnulacionesDelMes:
-                    return new Tuple<string, object>("USP_DASHBOARD_ANULACIONES_DEL_MES_2", new { YEAR = pars.anio, MONTH = pars.mes });
+                    return new Tuple<string, object>("USP_DASHBOARD_ANULACIONES_DEL_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 default:
                     return null;
             }

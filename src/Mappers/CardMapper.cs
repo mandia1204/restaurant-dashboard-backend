@@ -21,6 +21,9 @@ namespace Mappers {
             return card;
         }
         public CardDto Map<V1,V2>(Card<V1,V2> model) {
+            if(model == null) {
+                return null;
+            }
             return Map<V1>(new Card<V1>{ Value = model.Value});
         }
         /// <summary>

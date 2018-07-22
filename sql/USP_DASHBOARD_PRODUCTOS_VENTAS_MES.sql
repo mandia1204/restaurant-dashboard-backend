@@ -25,7 +25,7 @@ BEGIN
 
 set nocount on
 
-SELECT prod.tTipoProducto tipo, SUM(doc.nVenta) total
+SELECT prod.tTipoProducto [Key], SUM(doc.nVenta) [Value]
 FROM DDOCUMENTO det
 	INNER JOIN MDOCUMENTO doc on doc.tDocumento = det.tDocumento
 	INNER JOIN TPRODUCTO prod on prod.tCodigoProducto = det.tCodigoProducto

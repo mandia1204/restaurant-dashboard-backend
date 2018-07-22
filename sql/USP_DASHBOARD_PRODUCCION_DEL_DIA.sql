@@ -22,20 +22,16 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @date DATETIME
-DECLARE @year INT
-DECLARE @month INT
-DECLARE @day INT
+SET @date = CONVERT(DATE, GETDATE())
+DECLARE @dateEnd datetime = DATEADD(DAY, 1, @date);
 
-SET @date = GETDATE()
-SELECT @year =YEAR(@date), @month=MONTH(@date), @day= DAY(@date)
 --nVenta:FLOAT
-SELECT ISNULL(SUM(nVenta),0) AS total,
-	ISNULL(SUM(CASE WHEN ttipopedido='01' THEN nVenta ELSE 0 END),0) AS total_paloteo
+SELECT ISNULL(SUM(nVenta),0) [Value], --venta
+	ISNULL(SUM(CASE WHEN ttipopedido='01' THEN nVenta ELSE 0 END),0) [Value2] --total_paloteo
 FROM DBO.DPEDIDO 
 WHERE 
-	YEAR(fRegistro)= @year 
-	AND MONTH(fRegistro)= @month 
-	AND DAY(fRegistro)= @day
+	fRegistro >= @date 
+	AND fRegistro< @dateEnd
 	AND lImprime ='true' 
 END
 SET ANSI_NULLS OFF

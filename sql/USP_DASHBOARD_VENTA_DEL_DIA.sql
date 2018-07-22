@@ -22,21 +22,16 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @date DATETIME
-DECLARE @year INT
-DECLARE @month INT
-DECLARE @day INT
+SET @date = CONVERT(DATE, GETDATE())
+DECLARE @dateEnd datetime = DATEADD(DAY, 1, @date);
 
-SET @date = GETDATE()
-
-SELECT @year =YEAR(@date), @month=MONTH(@date), @day= DAY(@date)
 --NVENTA:FLOAT
-SELECT ISNULL(SUM(NVENTA),0) total
+SELECT ISNULL(SUM(NVENTA),0) [Value]
 FROM dbo.MDOCUMENTO
-WHERE tTipoDocumento='01' 
-	AND YEAR(fRegistro) = @year 
-	AND MONTH(fRegistro)=@month
-	AND DAY(fRegistro)=@day
-
+WHERE 
+	tTipoDocumento='01' 
+	AND fRegistro >= @date 
+	AND fRegistro< @dateEnd
 END
 SET ANSI_NULLS OFF
 GO
