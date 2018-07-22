@@ -10,19 +10,20 @@ namespace Util
         };
         public static readonly Dictionary<string, string> MotivosEliminacion= new Dictionary<string, string>()
         {
-            {"000", "otro" }, {"001", "digitación" }, {"002", "producción" }, {"003", "derrame" }, {"004", "cambio" }
+            {"000", "otro" }, {"001", "digitación" }, {"002", "producción" }, {"003", "derrame" }, {"004", "cambio" }, {"005", "mal comandado" }, {"006", "sin insumo" }
         };
 
         public static readonly Dictionary<string, string> TiposDeProducto= new Dictionary<string, string>()
         {
-            {"01","Alimentos" },{"02","Bebidas" },{"03","Marketing" },{"04","Otros" }
+            {"01","Alimentos" }, {"02","Bebidas" }, {"03","Marketing" }, {"04","Otros" }
         };
     }
     public static class Ops
     {
-        public const string ProduccionDia = "PDD";
         public const string VentaAnual = "VA";
         public const string VentaDia = "VDD";
+        public const string ProduccionDia = "PDD";
+        public const string TicketPromedioDia = "TPD";
         public const string PaxDia = "PXD";
         public const string Anulaciones = "ANL";
         public const string AnulacionesMes = "ANM";

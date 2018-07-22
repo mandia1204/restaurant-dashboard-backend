@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 using Models;
+using Models.Dto;
+using Services.Interfaces;
 using Util;
 
-namespace Repositories.Mocks {
-    public class DashboardRepositoryMock : IDashboardRepository{
-        public async Task<Dashboard> GetDashboardAsync(DashboardParameters pars){
-            Dashboard dashboard = null;
+namespace Services.Mocks {
+    public class DashboardServiceMock : IDashboardService{
+        public async Task<DashboardDto> GetDashboardAsync(DashboardParameters pars){
+            DashboardDto dashboard = null;
             var date = DateTime.Now.ToString("dd/MM HH:mm", CultureInfo.InvariantCulture);
             var task = Task.Run(() => {
-                dashboard = new Dashboard {
-                    charts = new List<Chart>{
-                        new Chart {
+                dashboard = new DashboardDto {
+                    charts = new List<ChartDto>{
+                        new ChartDto {
                             name= Charts.VentasAnuales,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "2016", new  Dictionary<string, object>{
@@ -33,7 +35,7 @@ namespace Repositories.Mocks {
                                 }
                             }
                         },
-                        new Chart {
+                        new ChartDto {
                             name= Charts.AnulacionesDelMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
@@ -46,7 +48,7 @@ namespace Repositories.Mocks {
                                     }
                             }
                         }
-                    },new Chart {
+                    },new ChartDto {
                             name= Charts.ProductosVendidosMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
@@ -58,7 +60,7 @@ namespace Repositories.Mocks {
                                     }
                             }
                         }
-                    },new Chart {
+                    },new ChartDto {
                             name= Charts.MozoDelMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
@@ -76,7 +78,7 @@ namespace Repositories.Mocks {
                                     }
                             }
                         }
-                    },new Chart {
+                    },new ChartDto {
                             name= Charts.PlatosMasVendidosMes,
                             data = new Dictionary<string, Dictionary<string, object>> {
                                 { "Mayo", new  Dictionary<string, object>
@@ -96,23 +98,23 @@ namespace Repositories.Mocks {
                         }
                     }
                   },//end charts
-                  cards = new Dictionary<string, Card> {
-                      {Cards.ProduccionDia, new Card { value= "2500"}},
-                      {Cards.VentaDia, new Card { value= "1500"}},
-                      {Cards.PaxDia, new Card { value= "58"}},
-                      {Cards.TicketPromedioDia, new Card { value= "177"}}
+                  cards = new Dictionary<string, CardDto> {
+                      {Cards.ProduccionDia, new CardDto { value= "2500"}},
+                      {Cards.VentaDia, new CardDto { value= "1500"}},
+                      {Cards.PaxDia, new CardDto { value= "58"}},
+                      {Cards.TicketPromedioDia, new CardDto { value= "177"}}
                   },
-                  anulaciones = new List<Anulacion> {
-                      new Anulacion { fecha = date, tipo= "otro", observacion=""},
-                      new Anulacion { fecha = date, tipo= "derrame", observacion="Se le cayó al cliente el vaso."},
-                      new Anulacion { fecha = date, tipo= "digitación", observacion=""},
-                      new Anulacion { fecha = date, tipo= "otro", observacion="Un problema con la cuenta."},
-                      new Anulacion { fecha = date, tipo= "digitación", observacion="No se escribió bien."},
-                      new Anulacion { fecha = date, tipo= "otro", observacion="Cliente no le gustó la comida. Solicitó el cambio o de lo contrario no iba a cancelar su cuenta, se tuvo que acceder a su petición."},
-                      new Anulacion { fecha = date, tipo= "producción", observacion="No llegó el camión a tiempo."},
-                      new Anulacion { fecha = date, tipo= "digitación", observacion=""},
-                      new Anulacion { fecha = date, tipo= "derrame", observacion=""},
-                      new Anulacion { fecha = date, tipo= "cambio", observacion="Se confundió de plato."},
+                  anulaciones = new List<AnulacionDto> {
+                      new AnulacionDto { fecha = date, tipo= "otro", observacion=""},
+                      new AnulacionDto { fecha = date, tipo= "derrame", observacion="Se le cayó al cliente el vaso."},
+                      new AnulacionDto { fecha = date, tipo= "digitación", observacion=""},
+                      new AnulacionDto { fecha = date, tipo= "otro", observacion="Un problema con la cuenta."},
+                      new AnulacionDto { fecha = date, tipo= "digitación", observacion="No se escribió bien."},
+                      new AnulacionDto { fecha = date, tipo= "otro", observacion="Cliente no le gustó la comida. Solicitó el cambio o de lo contrario no iba a cancelar su cuenta, se tuvo que acceder a su petición."},
+                      new AnulacionDto { fecha = date, tipo= "producción", observacion="No llegó el camión a tiempo."},
+                      new AnulacionDto { fecha = date, tipo= "digitación", observacion=""},
+                      new AnulacionDto { fecha = date, tipo= "derrame", observacion=""},
+                      new AnulacionDto { fecha = date, tipo= "cambio", observacion="Se confundió de plato."},
                   }
                 };
             });

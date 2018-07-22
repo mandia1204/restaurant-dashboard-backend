@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
 using System;
+using Models.Dto;
+using Services.Interfaces;
 
 namespace restaurant_dashboard_backend.Controllers
 {
@@ -19,7 +21,7 @@ namespace restaurant_dashboard_backend.Controllers
 
         // GET api/dashboard
         [HttpGet]
-        public Task<Dashboard> Get(DashboardParameters pars)
+        public Task<DashboardDto> Get(DashboardParameters pars)
         {
             return service.GetDashboardAsync(pars);
         }

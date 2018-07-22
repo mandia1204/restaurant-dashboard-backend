@@ -6,8 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Models;
 using Repositories;
-using Repositories.Mocks;
-using Repositories.Mappers;
+using Services.Mocks;
 using Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -16,6 +15,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using System;
 using AutoMapper;
 using System.Data;
+using Builders;
+using Mappers.Interfaces;
+using Mappers;
+using Services.Interfaces;
 
 namespace restaurant_dashboard_backend
 {
@@ -32,13 +35,13 @@ namespace restaurant_dashboard_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc();
+           // services.AddMvc();
             services.AddAutoMapper();
 
-            // services.AddMvc(opts =>
-            // {
-            //     opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
-            // });
+            services.AddMvc(opts =>
+            {
+                opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
+            });
 
             var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
             
@@ -55,15 +58,18 @@ namespace restaurant_dashboard_backend
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddScoped<IDashboardService, DashboardService>();
-            services.AddScoped<IDashboardRepository, DashboardRepository>();
-            //services.AddSingleton<IDashboardRepository, DashboardRepositoryMock>();
-            services.AddSingleton<IChartMapper, ChartMapper>();
-            services.AddSingleton<ICardMapper, CardMapper>();
-            services.AddSingleton<IProduccionCardMapper, ProduccionCardMapper>();
-            services.AddSingleton<ITicketPromedioCardMapper, TicketPromedioCardMapper>();
-            services.AddScoped<IAnulacionMapper, AnulacionMapper>();
+            services.AddScoped<IDashboardService, DashboardService>();
+            //services.AddTransient<IDashboardService, DashboardServiceMock>();
 
-            services.AddSingleton<IDashboardReader, DashboardReader>();
+            services.AddScoped<IAnulacionMapper, AnulacionMapper>();
+            services.AddScoped<IChartMapper, ChartMapper>();
+            services.AddScoped<ICardMapper, CardMapper>();
+            
+            services.AddTransient<IAnulacionesRepository, AnulacionesRepository>();
+            services.AddTransient<IChartRepository, ChartRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+
+            services.AddTransient<IDashboardBuilder, DashboardBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
