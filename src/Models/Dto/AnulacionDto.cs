@@ -1,7 +1,7 @@
 namespace Models.Dto {
     public class AnulacionDto {
-        public string fecha { get; set; }
-        public string tipo { get; set; }
-        public string observacion { get; set; }
+        public string Fecha { get; set; }
+        public string Tipo { get; set; }
+        public string Observacion { get; set; }
     }
 }

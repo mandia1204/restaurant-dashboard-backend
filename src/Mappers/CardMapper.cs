@@ -13,9 +13,9 @@ namespace Mappers {
             var card = new CardDto() ;
             
             if(typeof(V)==typeof(int)){
-                card.value = model.Value.ToString();
+                card.Value = model.Value.ToString();
             }else if(typeof(V)==typeof(double)){
-                card.value = string.Format("{0:0.00}", model.Value);
+                card.Value = string.Format("{0:0.00}", model.Value);
             }
 
             return card;
@@ -36,7 +36,7 @@ namespace Mappers {
 
             var card = new CardDto () ;
             var total =string.Format("{0:0.00}", produccion.Value2 / pax.Value);
-            card.value = total =="NaN" ? "0.00": total;
+            card.Value = total =="NaN" ? "0.00": total;
             return card;
         }
     }

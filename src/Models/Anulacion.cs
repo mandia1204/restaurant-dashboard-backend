@@ -2,8 +2,8 @@ using System;
 
 namespace Models {
     public class Anulacion {
-        public DateTime fecha { get; set; }
-        public string tipo { get; set; }
-        public string observacion { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Tipo { get; set; }
+        public string Observacion { get; set; }
     }
 }

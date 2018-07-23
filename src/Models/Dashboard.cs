@@ -4,16 +4,16 @@ using Models.Dto;
 
 namespace Models{
     public class Dashboard {
-        public IEnumerable<ChartRow<string, double>> productosVendidosMes {get; set;}
-        public IEnumerable<ChartRow<string, int>> platosVendidosMes {get; set;}
-        public IEnumerable<ChartRow<int, double>> ventasAnuales {get; set;}
-        public IEnumerable<ChartRow<string, int>> anulacionesDelMes {get; set;}
-        public Card<int> paxDelDia {get; set;}
-        public Card<double> ventaDelDia {get; set;}
+        public IEnumerable<ChartRow<string, double>> ProductosVendidosMes {get; set;}
+        public IEnumerable<ChartRow<string, int>> PlatosVendidosMes {get; set;}
+        public IEnumerable<ChartRow<int, double>> VentasAnuales {get; set;}
+        public IEnumerable<ChartRow<string, int>> AnulacionesDelMes {get; set;}
+        public Card<int> PaxDelDia {get; set;}
+        public Card<double> VentaDelDia {get; set;}
         /// <summary>
         /// Value1 = ventas del día, Value2= total paloteo
         /// </summary>
-        public Card<double,double> produccionDelDia {get; set;}
-        public IEnumerable<Anulacion> anulaciones {get; set;}
+        public Card<double,double> ProduccionDelDia {get; set;}
+        public IEnumerable<Anulacion> Anulaciones {get; set;}
     }
 }

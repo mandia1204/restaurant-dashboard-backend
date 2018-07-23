@@ -20,25 +20,25 @@ namespace Builders
         }
         public DashboardDto Build(Dashboard model, DashboardParameters pars) {
             var ops = pars.ParseOps();
-            var ventasProductosMesChart = chartMapper.Map(model.productosVendidosMes, Charts.ProductosVendidosMes, new List<string> { pars.mes.ToString() }, Constants.TiposDeProducto);
-            var platosVendidosMesChart = chartMapper.Map(model.platosVendidosMes, Charts.PlatosMasVendidosMes, new List<string> { pars.mes.ToString() }, null);
-            var ventasAnualesChart = chartMapper.Map(model.ventasAnuales, Charts.VentasAnuales, new List<string> { pars.anio.ToString() }, Constants.Meses);
-            var anulacionesDelMesChart = chartMapper.Map(model.anulacionesDelMes, Charts.AnulacionesDelMes, new List<string> { pars.mes.ToString() }, Constants.MotivosEliminacion);
-            var paxDelDiaCard = cardMapper.Map(model.paxDelDia);
-            var ventaDelDiaCard = cardMapper.Map(model.ventaDelDia);
-            var produccionDelDiaCard = cardMapper.Map(model.produccionDelDia);
+            var ventasProductosMesChart = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, new List<string> { pars.mes.ToString() }, Constants.TiposDeProducto);
+            var platosVendidosMesChart = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, new List<string> { pars.mes.ToString() }, null);
+            var ventasAnualesChart = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, new List<string> { pars.anio.ToString() }, Constants.Meses);
+            var anulacionesDelMesChart = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, new List<string> { pars.mes.ToString() }, Constants.MotivosEliminacion);
+            var paxDelDiaCard = cardMapper.Map(model.PaxDelDia);
+            var ventaDelDiaCard = cardMapper.Map(model.VentaDelDia);
+            var produccionDelDiaCard = cardMapper.Map(model.ProduccionDelDia);
             CardDto ticketPromedioCard = null;
             if(ops.Contains(Ops.TicketPromedioDia)){
-                ticketPromedioCard = cardMapper.MapTicketPromedio(model.produccionDelDia, model.paxDelDia);
+                ticketPromedioCard = cardMapper.MapTicketPromedio(model.ProduccionDelDia, model.PaxDelDia);
             }
 
             var charts = new List<ChartDto>{ ventasProductosMesChart, platosVendidosMesChart, ventasAnualesChart, anulacionesDelMesChart };
             var cards = new Dictionary<string, CardDto> { { Cards.PaxDia, paxDelDiaCard }, { Cards.VentaDia, ventaDelDiaCard }, {Cards.ProduccionDia, produccionDelDiaCard}, {Cards.TicketPromedioDia, ticketPromedioCard} };
 
             var dashboard = new DashboardDto {
-                anulaciones = anulacionMapper.Map(model.anulaciones),
-                charts = charts.Where(c => c!= null).ToList(),
-                cards = cards.Where(k => k.Value!= null).ToDictionary(k => k.Key, k => k.Value)
+                Anulaciones = anulacionMapper.Map(model.Anulaciones),
+                Charts = charts.Where(c => c!= null).ToList(),
+                Cards = cards.Where(k => k.Value!= null).ToDictionary(k => k.Key, k => k.Value)
             };
 
             return dashboard;

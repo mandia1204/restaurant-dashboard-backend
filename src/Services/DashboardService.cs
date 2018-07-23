@@ -64,14 +64,14 @@ namespace Services{
             await Task.WhenAll(taskList.Where(t => t!=null));
 
             var dashboard = new Dashboard {
-                anulaciones = anulacionesTask?.Result,
-                productosVendidosMes = ventasProductosMesTask?.Result,
-                platosVendidosMes = platosVendidosMesTask?.Result,
-                ventasAnuales = ventasAnualesTask?.Result,
-                anulacionesDelMes = anulacionesDelMesTask?.Result,
-                paxDelDia = paxDelDiaTask?.Result,
-                ventaDelDia = ventaDelDiaTask?.Result,
-                produccionDelDia = produccionDelDiaTask?.Result
+                Anulaciones = anulacionesTask?.Result,
+                ProductosVendidosMes = ventasProductosMesTask?.Result,
+                PlatosVendidosMes = platosVendidosMesTask?.Result,
+                VentasAnuales = ventasAnualesTask?.Result,
+                AnulacionesDelMes = anulacionesDelMesTask?.Result,
+                PaxDelDia = paxDelDiaTask?.Result,
+                VentaDelDia = ventaDelDiaTask?.Result,
+                ProduccionDelDia = produccionDelDiaTask?.Result
             };
             return dashboardBuilder.Build(dashboard, pars);
         }

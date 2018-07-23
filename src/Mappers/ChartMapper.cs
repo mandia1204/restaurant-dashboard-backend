@@ -13,7 +13,7 @@ namespace Mappers
                 return null;
             }
             var data = new Dictionary<string, Dictionary<string, object>>();
-            var chart = new ChartDto { name = chartName} ;
+            var chart = new ChartDto { Name = chartName} ;
             
             dataHeaders.ForEach(h => {
                 var itemData = model.Select(c => { 
@@ -21,7 +21,7 @@ namespace Mappers
                 });
                 data.Add(h, itemData.ToDictionary(x => x.Key, x=> (object)x.Value));
             });
-            chart.data = data;
+            chart.Data = data;
             return chart;
         }
     }

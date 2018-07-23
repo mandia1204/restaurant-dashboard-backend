@@ -2,14 +2,14 @@ namespace Models
 {
     public class DatabaseSettings
     {
-        public string dataSource { get; set; }
-        public string initialCatalog { get; set; }
-        public string userId { get; set; }
-        public string password { get; set; }
+        public string DataSource { get; set; }
+        public string InitialCatalog { get; set; }
+        public string UserId { get; set; }
+        public string Password { get; set; }
 
-        public string connectionString {
+        public string ConnectionString {
             get {
-                return $"Data Source={dataSource}; Initial Catalog={initialCatalog}; User id={userId}; Password={password};MultipleActiveResultSets=True;";
+                return $"Data Source={DataSource}; Initial Catalog={InitialCatalog}; User id={UserId}; Password={Password};MultipleActiveResultSets=True;";
             }
         }
     }

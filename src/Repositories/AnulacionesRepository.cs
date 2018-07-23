@@ -12,7 +12,7 @@ namespace Repositories
     {
         private readonly string connectionString;
         public AnulacionesRepository(IOptions<DatabaseSettings> dbSettings) {
-            this.connectionString = dbSettings.Value.connectionString;
+            this.connectionString = dbSettings.Value.ConnectionString;
         }
         public async Task<IEnumerable<Anulacion>> GetAsync()
         {

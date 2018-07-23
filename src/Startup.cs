@@ -35,13 +35,11 @@ namespace restaurant_dashboard_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-           // services.AddMvc();
-            services.AddAutoMapper();
-
-            services.AddMvc(opts =>
-            {
-                opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
-            });
+            services.AddMvc();
+            // services.AddMvc(opts =>
+            // {
+            //     opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
+            // });
 
             var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
             
@@ -50,7 +48,7 @@ namespace restaurant_dashboard_backend
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => 
             {
-                options.Audience = securitySettings.audience;
+                options.Audience = securitySettings.Audience;
                 options.TokenValidationParameters =GetTokenValidationParameters(securitySettings);
             });
 
@@ -91,7 +89,7 @@ namespace restaurant_dashboard_backend
         }
 
         private SymmetricSecurityKey GetSigningKey(SecuritySettings settings) {
-            var secretKey = settings.secretKey;
+            var secretKey = settings.SecretKey;
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
             return signingKey;
@@ -103,7 +101,7 @@ namespace restaurant_dashboard_backend
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = GetSigningKey(settings),
                 ValidateIssuer = true,
-                ValidIssuer = settings.issuer,
+                ValidIssuer = settings.Issuer,
                 ValidateLifetime =true
                 // ValidateAudience = true,
                 // ValidAudience =settings.audience,

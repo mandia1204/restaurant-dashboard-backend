@@ -15,7 +15,7 @@ namespace Repositories
     {
         private readonly string connectionString;
         public CardRepository(IOptions<DatabaseSettings> dbSettings) {
-            this.connectionString = dbSettings.Value.connectionString;
+            this.connectionString = dbSettings.Value.ConnectionString;
         }
         public Task<Card<V>> GetAsync<V>(string cardName)
         {
