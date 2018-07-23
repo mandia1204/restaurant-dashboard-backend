@@ -16,7 +16,7 @@ namespace Mappers {
             return anulaciones.Select(a => new AnulacionDto {
                 Fecha = a.Fecha.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture),
                 Observacion = a.Observacion?.ToLower(),
-                Tipo = Constants.MotivosEliminacion[a.Tipo]
+                Tipo = Constants.MotivosEliminacion.ContainsKey(a.Tipo) ? Constants.MotivosEliminacion[a.Tipo] : Constants.MotivosEliminacion["default"]
             });
         }
     }

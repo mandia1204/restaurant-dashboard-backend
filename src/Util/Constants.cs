@@ -10,7 +10,7 @@ namespace Util
         };
         public static readonly Dictionary<string, string> MotivosEliminacion= new Dictionary<string, string>()
         {
-            {"000", "otro" }, {"001", "digitación" }, {"002", "producción" }, {"003", "derrame" }, {"004", "cambio" }, {"005", "mal comandado" }, {"006", "sin insumo" }
+            {"000", "otro" }, {"001", "digitación" }, {"002", "producción" }, {"003", "derrame" }, {"004", "cambio" }, {"005", "mal comandado" }, {"006", "sin insumo" }, {"default", "default" }
         };
 
         public static readonly Dictionary<string, string> TiposDeProducto= new Dictionary<string, string>()
