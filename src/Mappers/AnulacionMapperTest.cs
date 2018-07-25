@@ -6,7 +6,7 @@ using Models;
 using NUnit.Framework;
 using Util;
 
-namespace src.Mappers
+namespace Mappers
 {
     [TestFixture]
     public class AnulacionMapperTest
