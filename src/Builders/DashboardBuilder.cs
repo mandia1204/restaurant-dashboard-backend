@@ -20,10 +20,10 @@ namespace Builders
         }
         public DashboardDto Build(Dashboard model, DashboardParameters pars) {
             var ops = pars.ParseOps();
-            var ventasProductosMesChart = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, new List<string> { pars.mes.ToString() }, Constants.TiposDeProducto);
-            var platosVendidosMesChart = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, new List<string> { pars.mes.ToString() }, null);
-            var ventasAnualesChart = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, new List<string> { pars.anio.ToString() }, Constants.Meses);
-            var anulacionesDelMesChart = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, new List<string> { pars.mes.ToString() }, Constants.MotivosEliminacion);
+            var ventasProductosMesChart = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, pars.mes.ToString(), Constants.TiposDeProducto);
+            var platosVendidosMesChart = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, pars.mes.ToString() , null);
+            var ventasAnualesChart = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, pars.anio.ToString(), Constants.Meses);
+            var anulacionesDelMesChart = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, pars.mes.ToString(), Constants.MotivosEliminacion);
             var paxDelDiaCard = cardMapper.Map(model.PaxDelDia);
             var ventaDelDiaCard = cardMapper.Map(model.VentaDelDia);
             var produccionDelDiaCard = cardMapper.Map(model.ProduccionDelDia);

@@ -8,20 +8,40 @@ namespace Mappers
 {
     public class ChartMapper: IChartMapper
     {
-        public ChartDto Map<K, V>(IEnumerable<ChartRow<K, V>> model, string chartName, IEnumerable<string> dataHeaders, Dictionary<K, string> valueMapper) {
+        /// <summary>
+        /// Simple chart
+        /// </summary>
+        public ChartDto Map<K, V>(IEnumerable<ChartRow<K, V>> model, string chartName, string headerName, Dictionary<K, string> valueMapper) {
+            if(model== null){
+                return null;
+            }
+            var itemData = model.ToDictionary(k => valueMapper !=null ? valueMapper[k.Key]: k.Key.ToString(), v => (object)v.Value);
+
+            return new ChartDto {
+                Name = chartName,
+                Data = new Dictionary<string, Dictionary<string, object>> { { headerName, itemData} }
+            };
+        }
+
+        /// <summary>
+        /// For mapping chart with groups
+        /// </summary>
+        public ChartDto Map<K, V>(IEnumerable<ChartRow<K, V>> model, string chartName, Dictionary<K, string> valueMapper) {
             if(model== null){
                 return null;
             }
             var data = new Dictionary<string, Dictionary<string, object>>();
-            var chart = new ChartDto { Name = chartName} ;
-            
-            foreach(var header in dataHeaders){
-                var itemData = model.ToDictionary(k => valueMapper !=null ? valueMapper[k.Key]: k.Key.ToString(), v => (object)v.Value);
-                data.Add(header, itemData);
+            var groups = model.Select(m => m.Group).Distinct().OrderBy(m=> m);
+            foreach(var groupName in groups) {
+                var groupData = model.Where(m => m.Group == groupName).OrderBy(m=> m.Key); 
+                var itemData = groupData.ToDictionary(k => valueMapper !=null ? valueMapper[k.Key]: k.Key.ToString(), v => (object)v.Value);
+                data.Add(groupName, itemData);
             }
 
-            chart.Data = data;
-            return chart;
+            return new ChartDto {
+                Name = chartName,
+                Data = data
+            };
         }
     }
 }
