@@ -21,6 +21,7 @@ namespace Util
     public static class Ops
     {
         public const string VentaAnual = "VA";
+        public const string VentaAnualGrouped = "VAG";
         public const string VentaDia = "VDD";
         public const string ProduccionDia = "PDD";
         public const string TicketPromedioDia = "TPD";
@@ -33,6 +34,7 @@ namespace Util
 
     public static class Charts {
         public const string VentasAnuales = "ventasAnuales";
+        public const string VentasAnualesGrupo = "ventasAnualesGrupo";
         public const string AnulacionesDelMes = "anulacionesDelMes";
         public const string ProductosVendidosMes = "productosVendidosMes";
         public const string MozoDelMes = "mozoDelMes";

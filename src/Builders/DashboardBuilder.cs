@@ -20,20 +20,21 @@ namespace Builders
         }
         public DashboardDto Build(Dashboard model, DashboardParameters pars) {
             var ops = pars.ParseOps();
-            var ventasProductosMesChart = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, pars.mes.ToString(), Constants.TiposDeProducto);
-            var platosVendidosMesChart = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, pars.mes.ToString() , null);
-            var ventasAnualesChart = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, pars.anio.ToString(), Constants.Meses);
-            var anulacionesDelMesChart = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, pars.mes.ToString(), Constants.MotivosEliminacion);
-            var paxDelDiaCard = cardMapper.Map(model.PaxDelDia);
-            var ventaDelDiaCard = cardMapper.Map(model.VentaDelDia);
-            var produccionDelDiaCard = cardMapper.Map(model.ProduccionDelDia);
-            CardDto ticketPromedioCard = null;
+            var ventasProductosMes = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, pars.mes.ToString(), Constants.TiposDeProducto);
+            var platosVendidosMes = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, pars.mes.ToString() , null);
+            var ventasAnuales = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, pars.anio.ToString(), Constants.Meses);
+            var ventasAnualesGrupo = chartMapper.Map(model.VentasAnualesGrupo, Charts.VentasAnualesGrupo,  Constants.Meses);
+            var anulacionesDelMes = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, pars.mes.ToString(), Constants.MotivosEliminacion);
+            var paxDelDia = cardMapper.Map(model.PaxDelDia);
+            var ventaDelDia = cardMapper.Map(model.VentaDelDia);
+            var produccionDelDia = cardMapper.Map(model.ProduccionDelDia);
+            CardDto ticketPromedio = null;
             if(ops.Contains(Ops.TicketPromedioDia)){
-                ticketPromedioCard = cardMapper.MapTicketPromedio(model.ProduccionDelDia, model.PaxDelDia);
+                ticketPromedio = cardMapper.MapTicketPromedio(model.ProduccionDelDia, model.PaxDelDia);
             }
 
-            var charts = new List<ChartDto>{ ventasProductosMesChart, platosVendidosMesChart, ventasAnualesChart, anulacionesDelMesChart };
-            var cards = new Dictionary<string, CardDto> { { Cards.PaxDia, paxDelDiaCard }, { Cards.VentaDia, ventaDelDiaCard }, {Cards.ProduccionDia, produccionDelDiaCard}, {Cards.TicketPromedioDia, ticketPromedioCard} };
+            var charts = new List<ChartDto>{ ventasProductosMes, platosVendidosMes, ventasAnuales, ventasAnualesGrupo, anulacionesDelMes };
+            var cards = new Dictionary<string, CardDto> { { Cards.PaxDia, paxDelDia }, { Cards.VentaDia, ventaDelDia }, {Cards.ProduccionDia, produccionDelDia}, {Cards.TicketPromedioDia, ticketPromedio} };
 
             var dashboard = new DashboardDto {
                 Anulaciones = anulacionMapper.Map(model.Anulaciones),

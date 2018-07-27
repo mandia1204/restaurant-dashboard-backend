@@ -7,6 +7,7 @@ namespace Models{
         public IEnumerable<ChartRow<string, double>> ProductosVendidosMes {get; set;}
         public IEnumerable<ChartRow<string, int>> PlatosVendidosMes {get; set;}
         public IEnumerable<ChartRow<int, double>> VentasAnuales {get; set;}
+        public IEnumerable<ChartRow<int, double>> VentasAnualesGrupo {get; set;}
         public IEnumerable<ChartRow<string, int>> AnulacionesDelMes {get; set;}
         public Card<int> PaxDelDia {get; set;}
         public Card<double> VentaDelDia {get; set;}

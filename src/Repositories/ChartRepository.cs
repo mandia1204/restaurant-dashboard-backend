@@ -21,11 +21,21 @@ namespace Repositories
         {
             using(var connection = new SqlConnection(this.connectionString)) {
                 await connection.OpenAsync();
-                var tup = GetUspParams(chartName, pars);
+                var tup = GetQueryParams(chartName, pars);
                 return await connection.QueryAsync<ChartRow<K,V>>(tup.Item1, tup.Item2, null, null, CommandType.StoredProcedure);
             }
         }
-        private Tuple<string, object> GetUspParams(string chartName, DashboardParameters pars) {
+
+        public async Task<IEnumerable<ChartRow<K,V>>> GetWithGroupAsync<K,V>(string chartName, DashboardParameters pars)
+        {
+            using(var connection = new SqlConnection(this.connectionString)) {
+                await connection.OpenAsync();
+                var tup = GetQueryParams(chartName, pars);
+                return await connection.QueryAsync<ChartRow<K,V>>(tup.Item1, tup.Item2, null, null, CommandType.Text);
+            }
+        }
+        
+        private Tuple<string, object> GetQueryParams(string chartName, DashboardParameters pars) {
             switch(chartName) {
                 case Charts.ProductosVendidosMes:
                     return new Tuple<string, object>("USP_DASHBOARD_PRODUCTOS_VENTAS_MES", new { YEAR = pars.anio, MONTH = pars.mes });
@@ -33,6 +43,9 @@ namespace Repositories
                     return new Tuple<string, object>("USP_DASHBOARD_PLATOS_MAS_VENDIDOS_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 case Charts.VentasAnuales:
                     return new Tuple<string, object>("USP_DASHBOARD_VENTA_ANUAL", new { YEAR = pars.anio });
+                case Charts.VentasAnualesGrupo:
+                    var years = new List<int>{ pars.anio -1 , pars.anio};
+                    return new Tuple<string, object>(ChartQueries.VentasAnualesGroup, new { YEARS = years });
                 case Charts.AnulacionesDelMes:
                     return new Tuple<string, object>("USP_DASHBOARD_ANULACIONES_DEL_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 default:

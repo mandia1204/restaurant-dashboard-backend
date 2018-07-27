@@ -23,42 +23,19 @@ namespace Services{
         }
         public async Task<DashboardDto> GetDashboardAsync(DashboardParameters pars) {
             var ops = pars.ParseOps();
-            Task<IEnumerable<Anulacion>> anulacionesTask = null;
-            Task<IEnumerable<ChartRow<string, double>>> ventasProductosMesTask = null;
-            Task<IEnumerable<ChartRow<string, int>>> platosVendidosMesTask = null;
-            Task<IEnumerable<ChartRow<int, double>>> ventasAnualesTask = null;
-            Task<IEnumerable<ChartRow<string, int>>> anulacionesDelMesTask = null;
-            Task<Card<int>> paxDelDiaTask = null;
-            Task<Card<double>> ventaDelDiaTask = null;
-            Task<Card<double,double>> produccionDelDiaTask = null;
 
-            if(ops.Contains(Ops.Anulaciones)) {
-                anulacionesTask = anulacionesRepository.GetAsync();
-            }
-            if(ops.Contains(Ops.ProductosVendidosMes)) {
-                ventasProductosMesTask = chartRepository.GetAsync<string,double>(Charts.ProductosVendidosMes, pars);
-            }
-            if(ops.Contains(Ops.PlatosMasVendidosMes)) {
-                platosVendidosMesTask = chartRepository.GetAsync<string,int>(Charts.PlatosMasVendidosMes, pars);
-            }
-            if(ops.Contains(Ops.VentaAnual)) {
-                ventasAnualesTask = chartRepository.GetAsync<int,double>(Charts.VentasAnuales, pars);
-            }
-            if(ops.Contains(Ops.AnulacionesMes)) {
-                anulacionesDelMesTask = chartRepository.GetAsync<string,int>(Charts.AnulacionesDelMes, pars);
-            }
-            if(ops.Contains(Ops.PaxDia)) {
-                paxDelDiaTask = cardRepository.GetAsync<int>(Cards.PaxDia);
-            }
-            if(ops.Contains(Ops.VentaDia)) {
-                ventaDelDiaTask = cardRepository.GetAsync<double>(Cards.VentaDia);
-            }
-            if(ops.Contains(Ops.ProduccionDia)) {
-                produccionDelDiaTask = cardRepository.GetAsync<double,double>(Cards.ProduccionDia);
-            }
+            var anulacionesTask = ops.Contains(Ops.Anulaciones) ? anulacionesRepository.GetAsync() : null;
+            var ventasProductosMesTask = ops.Contains(Ops.ProductosVendidosMes) ? chartRepository.GetAsync<string,double>(Charts.ProductosVendidosMes, pars): null;
+            var platosVendidosMesTask = ops.Contains(Ops.PlatosMasVendidosMes) ? chartRepository.GetAsync<string,int>(Charts.PlatosMasVendidosMes, pars): null;
+            var ventasAnualesTask = ops.Contains(Ops.VentaAnual) ? chartRepository.GetAsync<int,double>(Charts.VentasAnuales, pars): null;
+            var ventasAnualesGroupedTask = ops.Contains(Ops.VentaAnualGrouped) ? chartRepository.GetWithGroupAsync<int,double>(Charts.VentasAnualesGrupo, pars): null;
+            var anulacionesDelMesTask = ops.Contains(Ops.AnulacionesMes) ? chartRepository.GetAsync<string,int>(Charts.AnulacionesDelMes, pars): null;
+            var paxDelDiaTask = ops.Contains(Ops.PaxDia) ? cardRepository.GetAsync<int>(Cards.PaxDia): null;
+            var ventaDelDiaTask = ops.Contains(Ops.VentaDia) ? cardRepository.GetAsync<double>(Cards.VentaDia): null;
+            var produccionDelDiaTask = ops.Contains(Ops.ProduccionDia) ? cardRepository.GetAsync<double,double>(Cards.ProduccionDia): null;
             
             var taskList = new List<Task>{ anulacionesTask, ventasProductosMesTask, platosVendidosMesTask, ventasAnualesTask, anulacionesDelMesTask, 
-                                           paxDelDiaTask, ventaDelDiaTask, produccionDelDiaTask
+                                           paxDelDiaTask, ventaDelDiaTask, produccionDelDiaTask, ventasAnualesGroupedTask
                                          };
             
             await Task.WhenAll(taskList.Where(t => t!=null));
@@ -71,7 +48,8 @@ namespace Services{
                 AnulacionesDelMes = anulacionesDelMesTask?.Result,
                 PaxDelDia = paxDelDiaTask?.Result,
                 VentaDelDia = ventaDelDiaTask?.Result,
-                ProduccionDelDia = produccionDelDiaTask?.Result
+                ProduccionDelDia = produccionDelDiaTask?.Result,
+                VentasAnualesGrupo = ventasAnualesGroupedTask?.Result
             };
             return dashboardBuilder.Build(dashboard, pars);
         }
