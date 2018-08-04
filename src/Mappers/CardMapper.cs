@@ -36,7 +36,7 @@ namespace Mappers {
 
             var card = new CardDto () ;
             var total =string.Format("{0:0.00}", produccion.Value2 / pax.Value);
-            card.Value = total =="NaN" ? "0.00": total;
+            card.Value = (total =="NaN" || total == "∞") ? "0.00": total;
             return card;
         }
     }
