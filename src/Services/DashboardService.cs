@@ -33,9 +33,10 @@ namespace Services{
             var paxDelDiaTask = ops.Contains(Ops.PaxDia) ? cardRepository.GetAsync<int>(Cards.PaxDia): null;
             var ventaDelDiaTask = ops.Contains(Ops.VentaDia) ? cardRepository.GetAsync<double>(Cards.VentaDia): null;
             var produccionDelDiaTask = ops.Contains(Ops.ProduccionDia) ? cardRepository.GetAsync<double,double>(Cards.ProduccionDia): null;
+            var mozoProduccionMesTask = ops.Contains(Ops.MozoProduccionMes) ? chartRepository.GetAsync<string,double>(Charts.MozoProduccionMes, pars): null;
             
             var taskList = new List<Task>{ anulacionesTask, ventasProductosMesTask, platosVendidosMesTask, ventasAnualesTask, anulacionesDelMesTask, 
-                                           paxDelDiaTask, ventaDelDiaTask, produccionDelDiaTask, ventasAnualesGroupedTask
+                                           paxDelDiaTask, ventaDelDiaTask, produccionDelDiaTask, ventasAnualesGroupedTask, mozoProduccionMesTask
                                          };
             
             await Task.WhenAll(taskList.Where(t => t!=null));
@@ -49,7 +50,8 @@ namespace Services{
                 PaxDelDia = paxDelDiaTask?.Result,
                 VentaDelDia = ventaDelDiaTask?.Result,
                 ProduccionDelDia = produccionDelDiaTask?.Result,
-                VentasAnualesGrupo = ventasAnualesGroupedTask?.Result
+                VentasAnualesGrupo = ventasAnualesGroupedTask?.Result,
+                MozoProduccionDelMes = mozoProduccionMesTask?.Result
             };
             return dashboardBuilder.Build(dashboard, pars);
         }

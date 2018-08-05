@@ -25,6 +25,7 @@ namespace Builders
             var ventasAnuales = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, pars.anio.ToString(), Constants.Meses);
             var ventasAnualesGrupo = chartMapper.Map(model.VentasAnualesGrupo, Charts.VentasAnualesGrupo,  Constants.Meses);
             var anulacionesDelMes = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, pars.mes.ToString(), Constants.MotivosEliminacion);
+            var mozoProduccionMes = chartMapper.Map(model.MozoProduccionDelMes, Charts.MozoProduccionMes, pars.mes.ToString(), null);
             var paxDelDia = cardMapper.Map(model.PaxDelDia);
             var ventaDelDia = cardMapper.Map(model.VentaDelDia);
             var produccionDelDia = cardMapper.Map(model.ProduccionDelDia);
@@ -33,7 +34,7 @@ namespace Builders
                 ticketPromedio = cardMapper.MapTicketPromedio(model.ProduccionDelDia, model.PaxDelDia);
             }
 
-            var charts = new List<ChartDto>{ ventasProductosMes, platosVendidosMes, ventasAnuales, ventasAnualesGrupo, anulacionesDelMes };
+            var charts = new List<ChartDto>{ ventasProductosMes, platosVendidosMes, ventasAnuales, ventasAnualesGrupo, anulacionesDelMes, mozoProduccionMes };
             var cards = new Dictionary<string, CardDto> { { Cards.PaxDia, paxDelDia }, { Cards.VentaDia, ventaDelDia }, {Cards.ProduccionDia, produccionDelDia}, {Cards.TicketPromedioDia, ticketPromedio} };
 
             var dashboard = new DashboardDto {

@@ -46,6 +46,8 @@ namespace Repositories
                 case Charts.VentasAnualesGrupo:
                     var years = new List<int>{ pars.anio -1 , pars.anio};
                     return new Tuple<string, object>(ChartQueries.VentasAnualesGroup, new { YEARS = years });
+                case Charts.MozoProduccionMes: 
+                    return new Tuple<string, object>("USP_DASHBOARD_MOZO_PRODUCCION_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 case Charts.AnulacionesDelMes:
                     return new Tuple<string, object>("USP_DASHBOARD_ANULACIONES_DEL_MES", new { YEAR = pars.anio, MONTH = pars.mes });
                 default:

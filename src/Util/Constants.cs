@@ -30,6 +30,7 @@ namespace Util
         public const string AnulacionesMes = "ANM";
         public const string ProductosVendidosMes = "PVM";
         public const string PlatosMasVendidosMes = "PMV";
+        public const string MozoProduccionMes = "MPM";
     }
 
     public static class Charts {
@@ -39,6 +40,7 @@ namespace Util
         public const string ProductosVendidosMes = "productosVendidosMes";
         public const string MozoDelMes = "mozoDelMes";
         public const string PlatosMasVendidosMes = "platosMasVendidosMes";
+        public const string MozoProduccionMes = "mozoProduccionMes";
     }
 
     public static class Cards {
