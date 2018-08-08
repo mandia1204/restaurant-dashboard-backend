@@ -20,12 +20,12 @@ namespace Builders
         }
         public DashboardDto Build(Dashboard model, DashboardParameters pars) {
             var ops = pars.ParseOps();
-            var ventasProductosMes = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, pars.mes.ToString(), Constants.TiposDeProducto);
-            var platosVendidosMes = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, pars.mes.ToString() , null);
+            var ventasProductosMes = chartMapper.Map(model.ProductosVendidosMes, Charts.ProductosVendidosMes, Constants.Meses[pars.mes], Constants.TiposDeProducto);
+            var platosVendidosMes = chartMapper.Map(model.PlatosVendidosMes, Charts.PlatosMasVendidosMes, Constants.Meses[pars.mes] , null);
             var ventasAnuales = chartMapper.Map(model.VentasAnuales, Charts.VentasAnuales, pars.anio.ToString(), Constants.Meses);
             var ventasAnualesGrupo = chartMapper.Map(model.VentasAnualesGrupo, Charts.VentasAnualesGrupo,  Constants.Meses);
-            var anulacionesDelMes = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, pars.mes.ToString(), Constants.MotivosEliminacion);
-            var mozoProduccionMes = chartMapper.Map(model.MozoProduccionDelMes, Charts.MozoProduccionMes, pars.mes.ToString(), null);
+            var anulacionesDelMes = chartMapper.Map(model.AnulacionesDelMes, Charts.AnulacionesDelMes, Constants.Meses[pars.mes], Constants.MotivosEliminacion);
+            var mozoProduccionMes = chartMapper.Map(model.MozoProduccionDelMes, Charts.MozoProduccionMes, Constants.Meses[pars.mes], null);
             var paxDelDia = cardMapper.Map(model.PaxDelDia);
             var ventaDelDia = cardMapper.Map(model.VentaDelDia);
             var produccionDelDia = cardMapper.Map(model.ProduccionDelDia);
