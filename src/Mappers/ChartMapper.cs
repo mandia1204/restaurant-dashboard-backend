@@ -15,7 +15,7 @@ namespace Mappers
             if(model== null){
                 return null;
             }
-            var itemData = model.ToDictionary(k => valueMapper !=null ? valueMapper[k.Key]: k.Key.ToString(), v => (object)v.Value);
+            var itemData = model.ToDictionary(k => GetMappedValue(k.Key, valueMapper), v => (object)v.Value);
 
             return new ChartDto {
                 Name = chartName,
@@ -34,7 +34,7 @@ namespace Mappers
             var groups = model.Select(m => m.Group).Distinct().OrderBy(m=> m);
             foreach(var groupName in groups) {
                 var groupData = model.Where(m => m.Group == groupName).OrderBy(m=> m.Key); 
-                var itemData = groupData.ToDictionary(k => valueMapper !=null ? valueMapper[k.Key]: k.Key.ToString(), v => (object)v.Value);
+                var itemData = groupData.ToDictionary(k => GetMappedValue(k.Key, valueMapper), v => (object)v.Value);
                 data.Add(groupName, itemData);
             }
 
@@ -42,6 +42,14 @@ namespace Mappers
                 Name = chartName,
                 Data = data
             };
+        }
+
+        private string GetMappedValue<K>(K key, Dictionary<K, string> valueMapper) {
+            if(valueMapper !=null && valueMapper.ContainsKey(key)) {
+                return valueMapper[key];
+            }else {
+                return key.ToString();
+            }
         }
     }
 }

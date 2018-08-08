@@ -17,12 +17,55 @@ namespace Mappers
                 }
             };
 
-            var mapper = new ChartMapper();
-            var result = mapper.Map<string, int>(source, "name", header, null);
+            var result = new ChartMapper().Map<string, int>(source, "name", header, null);
 
             Assert.AreEqual("name", result.Name, "name shoould be populated");
             Assert.IsTrue(result.Data.ContainsKey("2018"), "should contain the 2018 key");
             Assert.AreEqual(10, result.Data["2018"]["tipo01"], "should be 10");
+        }
+
+        [Test]
+        public void Map_PassingValueMapper_ChartContainsMappedKeys() {
+            var header = "2018";
+            var source = new List<ChartRow<string,int>> {
+                new ChartRow<string, int>{
+                    Key = "tipo01", Value = 10
+                },
+                new ChartRow<string, int>{
+                    Key = "tipo02", Value = 20
+                }
+            };
+            var valueMapper = new Dictionary<string,string> {
+                { "tipo01", "mi tipo 1"},
+                { "tipo02", "mi tipo 2"}
+            };
+
+            var result =  new ChartMapper().Map<string, int>(source, "name", header, valueMapper);
+
+            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 1"), "should contain key mapped");
+            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 2"), "should contain key mapped");
+        }
+
+        [Test]
+        public void Map_ValueNotInValueMapper_ChartContainsMappedKeys() {
+            var header = "2018";
+            var source = new List<ChartRow<string,int>> {
+                new ChartRow<string, int>{
+                    Key = "tipo01", Value = 10
+                },
+                new ChartRow<string, int>{
+                    Key = "tipo03", Value = 20
+                },
+            };
+            var valueMapper = new Dictionary<string,string> {
+                { "tipo01", "mi tipo 1"},
+                { "tipo02", "mi tipo 2"}
+            };
+
+            var result =  new ChartMapper().Map<string, int>(source, "name", header, valueMapper);
+
+            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 1"), "should contain key mapped");
+            Assert.IsTrue(result.Data["2018"].ContainsKey("tipo03"), "should contain key mapped");
         }
 
         [Test]
@@ -48,8 +91,7 @@ namespace Mappers
                 }
             };
 
-            var mapper = new ChartMapper();
-            var result = mapper.Map<string, int>(source, "mychart", null);
+            var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
             Assert.AreEqual("mychart", result.Name, "name should be populated");
             Assert.IsTrue(result.Data.ContainsKey("2017"), "should contain the 2017 key");
@@ -75,8 +117,7 @@ namespace Mappers
                 }
             };
 
-            var mapper = new ChartMapper();
-            var result = mapper.Map<string, int>(source, "mychart", null);
+            var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
             Assert.AreEqual("2017", result.Data.Keys.ElementAt(0));
             Assert.AreEqual("2018", result.Data.Keys.ElementAt(1));
@@ -105,8 +146,7 @@ namespace Mappers
                 }
             };
 
-            var mapper = new ChartMapper();
-            var result = mapper.Map<string, int>(source, "mychart", null);
+            var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
             Assert.AreEqual("tipo01", result.Data["2017"].Keys.ElementAt(0));
             Assert.AreEqual("tipo03", result.Data["2017"].Keys.ElementAt(2));
@@ -115,9 +155,15 @@ namespace Mappers
         }
 
         [Test]
+        public void Map_GroupPassingNullModel_ReturnsNull() {
+            var result = new ChartMapper().Map<string, int>(null, "mychart", null);
+            Assert.AreEqual(null, result);
+        }
+
+        [Test]
         public void Map_PassingNullModel_ReturnsNull() {
-            var mapper = new ChartMapper();
-            var result = mapper.Map<string, int>(null, "mychart", null);
+            var result = new ChartMapper().Map<string, int>(null, null, "mychart", null);
+            Assert.AreEqual(null, result);
         }
     }
 }
