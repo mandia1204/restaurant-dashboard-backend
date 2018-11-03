@@ -17,6 +17,7 @@ namespace restaurant_dashboard_backend
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://*:5000")
                 .UseContentRoot(GetContentRoot())
                 .Build();
 
@@ -26,9 +27,9 @@ namespace restaurant_dashboard_backend
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             Console.WriteLine("env:{0}", env);
             
-            if(env == "production") {
-                root += "\\backend";
-            }
+            // if(env == "production") {
+            //     root += "\\backend";
+            // }
 
             return root;
         }
