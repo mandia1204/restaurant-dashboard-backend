@@ -1,0 +1,4 @@
+#!/usr/bin/groovy
+
+@Library('jenkins-library') _
+appDeployPipeline(appName: 'dashboard-be', projectName: 'rs-dboard-be-build/master')

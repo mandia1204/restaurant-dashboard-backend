@@ -4,6 +4,4 @@ WORKDIR /var/www/aspnetcoreapp
 
 COPY ./dist/ .
 
-#RUN rm appsettings.Development.json appsettings.json global.json Program.cs Startup.cs web.config restaurant-dashboard-backend.csproj hosting.json
-
 ENTRYPOINT ["dotnet", "restaurant-dashboard-backend.dll"]
