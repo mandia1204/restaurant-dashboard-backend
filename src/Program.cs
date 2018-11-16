@@ -11,15 +11,14 @@ namespace restaurant_dashboard_backend
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
-
-        public static IWebHost BuildWebHost(string[] args) =>
+        
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseUrls("http://*:5000")
-                .UseContentRoot(GetContentRoot())
-                .Build();
+                .UseContentRoot(GetContentRoot());
 
         private static string GetContentRoot() {
             var root = Directory.GetCurrentDirectory();
