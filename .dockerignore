@@ -2,3 +2,9 @@ src/bin
 src/obj
 src/dist
 src/README.md
+sql
+dist
+packages
+Jenkins*
+notes.txt
+skaffold.yaml
