@@ -37,6 +37,22 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        },
+        {
+            "name": "minikube Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processName": "dotnet",
+            "sourceFileMap": {
+                "/app": "${workspaceRoot}/src"
+            },
+            "pipeTransport": {
+                "pipeProgram": "kubectl",
+                "pipeArgs": ["exec", "-i", "dashboard-be-app-8478645c9b-lb6rx","--" ],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "quoteArgs": false
+            }
         }
     ]
 }
