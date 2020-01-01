@@ -1,0 +1,8 @@
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: dashboard-be-app
+spec:
+  prefix: /dashboardApi/
+  rewrite: /api/
+  service: dashboard-be-app:5000

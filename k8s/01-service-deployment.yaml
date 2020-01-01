@@ -4,7 +4,7 @@ metadata:
   name: dashboard-be-app
   namespace: default
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: dashboard-be
   ports:
