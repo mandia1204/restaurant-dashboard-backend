@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore;
 
 namespace restaurant_dashboard_backend
@@ -16,6 +16,11 @@ namespace restaurant_dashboard_backend
         
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((_, builder) => {
+                    builder.ClearProviders();
+                    builder.AddConsole();
+                    builder.AddDebug();
+                })
                 .UseStartup<Startup>()
                 .UseUrls("http://*:5000")
                 .UseContentRoot(GetContentRoot());

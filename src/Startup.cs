@@ -11,10 +11,6 @@ using Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Repositories.Interfaces;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using System;
-using AutoMapper;
-using System.Data;
 using Builders;
 using Mappers.Interfaces;
 using Mappers;
@@ -35,7 +31,8 @@ namespace restaurant_dashboard_backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc();
+
+            services.AddControllers();
             // services.AddMvc(opts =>
             // {
             //     opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
@@ -55,9 +52,8 @@ namespace restaurant_dashboard_backend
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
 
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
-            services.AddScoped<IDashboardService, DashboardService>();
-            services.AddScoped<IDashboardService, DashboardService>();
-            //services.AddTransient<IDashboardService, DashboardServiceMock>();
+            // services.AddScoped<IDashboardService, DashboardService>();
+            services.AddTransient<IDashboardService, DashboardServiceMock>();
 
             services.AddScoped<IAnulacionMapper, AnulacionMapper>();
             services.AddScoped<IChartMapper, ChartMapper>();
@@ -71,11 +67,8 @@ namespace restaurant_dashboard_backend
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             app.UseCors(builder =>
                 {
                     builder.AllowAnyHeader();
@@ -85,7 +78,15 @@ namespace restaurant_dashboard_backend
             );
 
             app.UseAuthentication();
-            app.UseMvc();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private SymmetricSecurityKey GetSigningKey(SecuritySettings settings) {
