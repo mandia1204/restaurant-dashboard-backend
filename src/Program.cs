@@ -30,11 +30,6 @@ namespace restaurant_dashboard_backend
             Console.WriteLine("root:{0}", root);
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             Console.WriteLine("env:{0}", env);
-            
-            // if(env == "production") {
-            //     root += "\\backend";
-            // }
-
             return root;
         }
     }

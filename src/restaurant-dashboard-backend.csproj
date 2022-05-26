@@ -13,6 +13,11 @@
     <PackageReference Include="NUnit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
   </ItemGroup>
+  <ItemGroup> 
+    <Content Include="keys\**"> 
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>

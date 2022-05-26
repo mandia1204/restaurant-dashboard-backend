@@ -3,17 +3,20 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Models;
+using System;
 using System.Text;
+using System.IO;
 
 namespace restaurant_dashboard_backend
 {
     public static class ConfigureAuth
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public static IServiceCollection ConfigureAuthAndToken(this IServiceCollection services, IConfiguration Configuration )
+        private static string contentRoot;
+        public static IServiceCollection ConfigureAuthAndToken(this IServiceCollection services, IConfiguration configuration)
         {
-            var securitySettings = Configuration.GetSection("Security").Get<SecuritySettings>();
-
+            contentRoot = configuration.GetValue<string>(Microsoft.AspNetCore.Hosting.WebHostDefaults.ContentRootKey);
+            
+            var securitySettings = configuration.GetSection("Security").Get<SecuritySettings>();
             services.AddAuthentication(o=>{
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -25,18 +28,36 @@ namespace restaurant_dashboard_backend
             return services;
         }
 
-        private static SymmetricSecurityKey GetSigningKey(SecuritySettings settings) {
+        private static SymmetricSecurityKey GetSymetricSigningKey(SecuritySettings settings) {
             var secretKey = settings.SecretKey;
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
             return signingKey;
         }
 
+        private static SecurityKey GetAsymetricSigningKey(SecuritySettings settings) {
+            var secretKey = settings.SecretKey;
+            var rsa = System.Security.Cryptography.RSA.Create();
+
+            var pemPath = Path.Combine(contentRoot, "keys", "public-key.key");
+            var keyStr = File.ReadAllText(pemPath); 
+            keyStr = keyStr.Replace("-----BEGIN RSA PUBLIC KEY-----", "");
+            keyStr = keyStr.Replace(System.Environment.NewLine, "");
+            keyStr = keyStr.Replace("-----END RSA PUBLIC KEY-----", "");
+
+            rsa.ImportRSAPublicKey(Convert.FromBase64String(keyStr), out _);
+            var securityKey = new RsaSecurityKey(rsa);
+
+            var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+
+            return credentials.Key;
+        }
+
         private static TokenValidationParameters GetTokenValidationParameters(SecuritySettings settings){
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = GetSigningKey(settings),
+                IssuerSigningKey = settings.UseRsa ? GetAsymetricSigningKey(settings) : GetSymetricSigningKey(settings),
                 ValidateIssuer = true,
                 ValidIssuer = settings.Issuer,
                 ValidateLifetime =true
