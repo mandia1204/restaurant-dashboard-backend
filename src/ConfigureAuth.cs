@@ -36,14 +36,37 @@ namespace restaurant_dashboard_backend
         }
 
         private static SecurityKey GetAsymetricSigningKey(SecuritySettings settings) {
+            var rsa = System.Security.Cryptography.RSA.Create();
+
+            var pemPath = Path.Combine(contentRoot, "keys", settings.UseKms? "kms-public.key" : "public.key");
+            var keyStr = File.ReadAllText(pemPath);
+
+            if(settings.UseKms){
+                keyStr = keyStr.Replace("-----BEGIN PUBLIC KEY-----", "");
+                keyStr = keyStr.Replace(System.Environment.NewLine, "");
+                keyStr = keyStr.Replace("-----END PUBLIC KEY-----", "");
+                rsa.ImportSubjectPublicKeyInfo(Convert.FromBase64String(keyStr), out _);
+            }else{
+                keyStr = keyStr.Replace("-----BEGIN RSA PUBLIC KEY-----", "");
+                keyStr = keyStr.Replace(System.Environment.NewLine, "");
+                keyStr = keyStr.Replace("-----END RSA PUBLIC KEY-----", "");
+                 rsa.ImportRSAPublicKey(Convert.FromBase64String(keyStr), out _);
+            }
+           
+            var securityKey = new RsaSecurityKey(rsa);
+            var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+            return credentials.Key;
+        }
+
+        private static SecurityKey GetAsymetricKmsSigningKey(SecuritySettings settings) {
             var secretKey = settings.SecretKey;
             var rsa = System.Security.Cryptography.RSA.Create();
 
-            var pemPath = Path.Combine(contentRoot, "keys", "public-key.key");
+            var pemPath = Path.Combine(contentRoot, "keys", "kms-public.key");
             var keyStr = File.ReadAllText(pemPath); 
-            keyStr = keyStr.Replace("-----BEGIN RSA PUBLIC KEY-----", "");
+            keyStr = keyStr.Replace("-----BEGIN PUBLIC KEY-----", "");
             keyStr = keyStr.Replace(System.Environment.NewLine, "");
-            keyStr = keyStr.Replace("-----END RSA PUBLIC KEY-----", "");
+            keyStr = keyStr.Replace("-----END PUBLIC KEY-----", "");
 
             rsa.ImportRSAPublicKey(Convert.FromBase64String(keyStr), out _);
             var securityKey = new RsaSecurityKey(rsa);
