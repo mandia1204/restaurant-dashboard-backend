@@ -1,4 +1,4 @@
 #!/usr/bin/groovy
 
 @Library('jenkins-library') _
-netcoreAppBuildPipeline(projectSrcPath: 'src/restaurant-dashboard-backend.csproj')
+k8sDockerfileBuildPipeline(repoName:"mandia1204/dashboard-be-app", repoDir: "dashboard-be")
