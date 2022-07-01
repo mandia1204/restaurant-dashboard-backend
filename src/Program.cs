@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore;
+using Microsoft.Extensions.Configuration;
 
 namespace restaurant_dashboard_backend
 {
@@ -20,6 +21,11 @@ namespace restaurant_dashboard_backend
                     builder.ClearProviders();
                     builder.AddConsole();
                     builder.AddDebug();
+                })
+                .ConfigureAppConfiguration((hostingContext, config) => {
+                    config.AddJsonFile("secrets.json",
+                       optional: true,
+                       reloadOnChange: true);
                 })
                 .UseStartup<Startup>()
                 .UseUrls("http://*:5000")

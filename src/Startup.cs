@@ -26,10 +26,9 @@ namespace restaurant_dashboard_backend
             // {
             //     opts.Filters.Add(new AllowAnonymousFilter()); //to bypass auth
             // });
-
-            services.ConfigureAuthAndToken(Configuration);
-
+            services.Configure<Secrets>(Configuration.GetSection("Secrets"));
             services.Configure<DatabaseSettings>(Configuration.GetSection("Database"));
+            services.ConfigureAuthAndToken(Configuration);
 
             services.AddContainerDepencencies();
         }

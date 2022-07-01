@@ -15,6 +15,7 @@ namespace restaurant_dashboard_backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public static IServiceCollection AddContainerDepencencies(this IServiceCollection services)
         {
+            services.AddSingleton<IConnectionStringProvider, ConnectionStringProvider>();
             services.AddSingleton<IAppSettingsService, AppSettingsService>();
             // services.AddScoped<IDashboardService, DashboardService>();
             services.AddTransient<IDashboardService, DashboardServiceMock>();

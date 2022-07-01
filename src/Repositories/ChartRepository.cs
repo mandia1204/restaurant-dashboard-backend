@@ -14,8 +14,8 @@ namespace Repositories
     public class ChartRepository : IChartRepository
     {
         private readonly string connectionString;
-        public ChartRepository(IOptions<DatabaseSettings> dbSettings) {
-            this.connectionString = dbSettings.Value.ConnectionString;
+        public ChartRepository(IConnectionStringProvider conn) {
+            this.connectionString = conn.GetConnectionString();
         }
         public async Task<IEnumerable<ChartRow<K,V>>> GetAsync<K,V>(string chartName, DashboardParameters pars)
         {

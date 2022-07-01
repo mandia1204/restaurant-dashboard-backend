@@ -17,19 +17,20 @@ namespace restaurant_dashboard_backend
             contentRoot = configuration.GetValue<string>(Microsoft.AspNetCore.Hosting.WebHostDefaults.ContentRootKey);
             
             var securitySettings = configuration.GetSection("Security").Get<SecuritySettings>();
+            var secrets = configuration.GetSection("Secrets").Get<Secrets>();
+
             services.AddAuthentication(o=>{
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => 
             {
                 options.Audience = securitySettings.Audience;
-                options.TokenValidationParameters = GetTokenValidationParameters(securitySettings);
+                options.TokenValidationParameters = GetTokenValidationParameters(securitySettings, secrets.SecretKey);
             });
             return services;
         }
 
-        private static SymmetricSecurityKey GetSymetricSigningKey(SecuritySettings settings) {
-            var secretKey = settings.SecretKey;
+        private static SymmetricSecurityKey GetSymetricSigningKey(SecuritySettings settings, string secretKey) {
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
             return signingKey;
@@ -59,7 +60,6 @@ namespace restaurant_dashboard_backend
         }
 
         private static SecurityKey GetAsymetricKmsSigningKey(SecuritySettings settings) {
-            var secretKey = settings.SecretKey;
             var rsa = System.Security.Cryptography.RSA.Create();
 
             var pemPath = Path.Combine(contentRoot, "keys", "kms-public.key");
@@ -76,11 +76,11 @@ namespace restaurant_dashboard_backend
             return credentials.Key;
         }
 
-        private static TokenValidationParameters GetTokenValidationParameters(SecuritySettings settings){
+        private static TokenValidationParameters GetTokenValidationParameters(SecuritySettings settings, string secretKey){
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = settings.UseRsa ? GetAsymetricSigningKey(settings) : GetSymetricSigningKey(settings),
+                IssuerSigningKey = settings.UseRsa ? GetAsymetricSigningKey(settings) : GetSymetricSigningKey(settings, secretKey),
                 ValidateIssuer = true,
                 ValidIssuer = settings.Issuer,
                 ValidateLifetime =true

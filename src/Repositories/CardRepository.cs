@@ -14,8 +14,8 @@ namespace Repositories
     public class CardRepository : ICardRepository
     {
         private readonly string connectionString;
-        public CardRepository(IOptions<DatabaseSettings> dbSettings) {
-            this.connectionString = dbSettings.Value.ConnectionString;
+        public CardRepository(IConnectionStringProvider conn) {
+            this.connectionString = conn.GetConnectionString();
         }
         public Task<Card<V>> GetAsync<V>(string cardName)
         {
