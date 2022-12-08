@@ -19,7 +19,7 @@ namespace restaurant_dashboard_backend
             var securitySettings = configuration.GetSection("Security").Get<SecuritySettings>();
             var secrets = configuration.GetSection("Secrets").Get<Secrets>();
 
-            services.AddAuthentication(o=>{
+            services.AddAuthentication(o => {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options => 
@@ -71,7 +71,7 @@ namespace restaurant_dashboard_backend
             rsa.ImportRSAPublicKey(Convert.FromBase64String(keyStr), out _);
             var securityKey = new RsaSecurityKey(rsa);
 
-            var credentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256);
 
             return credentials.Key;
         }
