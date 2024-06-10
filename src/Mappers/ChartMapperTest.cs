@@ -19,9 +19,9 @@ namespace Mappers
 
             var result = new ChartMapper().Map<string, int>(source, "name", header, null);
 
-            Assert.AreEqual("name", result.Name, "name shoould be populated");
-            Assert.IsTrue(result.Data.ContainsKey("2018"), "should contain the 2018 key");
-            Assert.AreEqual(10, result.Data["2018"]["tipo01"], "should be 10");
+            Assert.That(result.Name, Is.EqualTo("name"), "name shoould be populated");
+            Assert.That(result.Data.ContainsKey("2018"), Is.True, "should contain the 2018 key");
+            Assert.That(result.Data["2018"]["tipo01"], Is.EqualTo(10), "should be 10");
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Mappers
 
             var result =  new ChartMapper().Map<string, int>(source, "name", header, valueMapper);
 
-            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 1"), "should contain key mapped");
-            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 2"), "should contain key mapped");
+            Assert.That(result.Data["2018"].ContainsKey("mi tipo 1"), Is.True, "should contain key mapped");
+            Assert.That(result.Data["2018"].ContainsKey("mi tipo 2"), Is.True, "should contain key mapped");
         }
 
         [Test]
@@ -64,8 +64,8 @@ namespace Mappers
 
             var result =  new ChartMapper().Map<string, int>(source, "name", header, valueMapper);
 
-            Assert.IsTrue(result.Data["2018"].ContainsKey("mi tipo 1"), "should contain key mapped");
-            Assert.IsTrue(result.Data["2018"].ContainsKey("tipo03"), "should contain key mapped");
+            Assert.That(result.Data["2018"].ContainsKey("mi tipo 1"), Is.True, "should contain key mapped");
+            Assert.That(result.Data["2018"].ContainsKey("tipo03"), Is.True, "should contain key mapped");
         }
 
         [Test]
@@ -93,17 +93,19 @@ namespace Mappers
 
             var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
-            Assert.AreEqual("mychart", result.Name, "name should be populated");
-            Assert.IsTrue(result.Data.ContainsKey("2017"), "should contain the 2017 key");
-            Assert.IsTrue(result.Data.ContainsKey("2018"), "should contain the 2018 key");
-            Assert.AreEqual(3, result.Data["2017"].Count, "should contain 3 items");
-            Assert.AreEqual(3, result.Data["2018"].Count, "should contain 3 items");
-            Assert.AreEqual(10, result.Data["2017"]["tipo01"]);
-            Assert.AreEqual(100, result.Data["2017"]["tipo02"]);
-            Assert.AreEqual(200, result.Data["2017"]["tipo03"]);
-            Assert.AreEqual(20, result.Data["2018"]["tipo01"]);
-            Assert.AreEqual(200, result.Data["2018"]["tipo02"]);
-            Assert.AreEqual(300, result.Data["2018"]["tipo03"]);
+            Assert.That(result.Name, Is.EqualTo("mychart"), "name should be populated");
+            Assert.That(result.Data.ContainsKey("2017"), Is.True, "should contain the 2017 key");
+            Assert.That(result.Data.ContainsKey("2018"), Is.True, "should contain the 2018 key");
+
+            Assert.That(result.Data["2017"].Count, Is.EqualTo(3), "should contain 3 items");
+            Assert.That(result.Data["2018"].Count, Is.EqualTo(3), "should contain 3 items");
+
+            Assert.That(result.Data["2017"]["tipo01"], Is.EqualTo(10));
+            Assert.That(result.Data["2017"]["tipo02"], Is.EqualTo(100));
+            Assert.That(result.Data["2017"]["tipo03"], Is.EqualTo(200));
+            Assert.That(result.Data["2018"]["tipo01"], Is.EqualTo(20));
+            Assert.That(result.Data["2018"]["tipo02"], Is.EqualTo(200));
+            Assert.That(result.Data["2018"]["tipo03"], Is.EqualTo(300));
         }
 
         [Test]
@@ -119,8 +121,8 @@ namespace Mappers
 
             var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
-            Assert.AreEqual("2017", result.Data.Keys.ElementAt(0));
-            Assert.AreEqual("2018", result.Data.Keys.ElementAt(1));
+            Assert.That(result.Data.Keys.ElementAt(0), Is.EqualTo("2017"));
+            Assert.That(result.Data.Keys.ElementAt(1), Is.EqualTo("2018"));
         }
 
         [Test]
@@ -148,22 +150,24 @@ namespace Mappers
 
             var result = new ChartMapper().Map<string, int>(source, "mychart", null);
 
-            Assert.AreEqual("tipo01", result.Data["2017"].Keys.ElementAt(0));
-            Assert.AreEqual("tipo03", result.Data["2017"].Keys.ElementAt(2));
-            Assert.AreEqual("tipo01", result.Data["2018"].Keys.ElementAt(0));
-            Assert.AreEqual("tipo03", result.Data["2018"].Keys.ElementAt(2));
+            Assert.That(result.Data["2017"].Keys.ElementAt(0), Is.EqualTo("tipo01"));
+            Assert.That(result.Data["2017"].Keys.ElementAt(2), Is.EqualTo("tipo03"));
+            Assert.That(result.Data["2018"].Keys.ElementAt(0), Is.EqualTo("tipo01"));
+            Assert.That(result.Data["2018"].Keys.ElementAt(2), Is.EqualTo("tipo03"));
         }
 
         [Test]
         public void Map_GroupPassingNullModel_ReturnsNull() {
             var result = new ChartMapper().Map<string, int>(null, "mychart", null);
-            Assert.AreEqual(null, result);
+            
+            Assert.That(result, Is.Null);
         }
 
         [Test]
         public void Map_PassingNullModel_ReturnsNull() {
             var result = new ChartMapper().Map<string, int>(null, null, "mychart", null);
-            Assert.AreEqual(null, result);
+            
+            Assert.That(result, Is.Null);
         }
     }
 }

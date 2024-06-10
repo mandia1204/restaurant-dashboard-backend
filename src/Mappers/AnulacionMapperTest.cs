@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Mappers;
 using Models;
 using NUnit.Framework;
 using Util;
@@ -22,18 +21,19 @@ namespace Mappers
             var result = mapper.Map(source);
 
             var first = result.First();
-            Assert.AreEqual(2, result.Count(), "should have 2 items");
-            Assert.AreEqual(Constants.MotivosEliminacion["000"], first.Tipo, "should map Tipo '000' correctly");
-            Assert.AreEqual("05/10/2018 11:30", first.Fecha, "should map Fecha correctly");
-            Assert.AreEqual("test 2", result.Last().Observacion, "should map Observacion correctly");
+            Assert.That(result.Count(), Is.EqualTo(2), "should have 2 items");
+            Assert.That(Constants.MotivosEliminacion["000"], Is.EqualTo(first.Tipo), "should map Tipo '000' correctly");
+            Assert.That(first.Fecha, Is.EqualTo("05/10/2018 11:30"), "should map Fecha correctly");
+            Assert.That(result.Last().Observacion, Is.EqualTo("test 2"), "should map Observacion correctly");
         }
+
         [Test]
         public void Map_PassingNull_ReturnsEmptyList() {
             var mapper = new AnulacionMapper();
 
             var result = mapper.Map(null);
-
-            Assert.AreEqual(0, result.Count(), "should return empty list");
+            
+            Assert.That(result.Count(), Is.EqualTo(0), "should return empty list");
         }
         [Test]
         public void Map_PassingTipoNotInConstants_MapsDefaultTipo() {
@@ -44,7 +44,7 @@ namespace Mappers
 
             var result = mapper.Map(source).First();
 
-            Assert.AreEqual(Constants.MotivosEliminacion["default"], result.Tipo, "maps default tipo");
+            Assert.That(result.Tipo, Is.EqualTo(Constants.MotivosEliminacion["default"]), "maps default tipo");
         }
     }
 }

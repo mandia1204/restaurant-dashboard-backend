@@ -80,9 +80,9 @@ namespace Builders
             var builder = new DashboardBuilder(anulacionesMapper, chartMapper, cardMapper);
             var result = builder.Build(model, parameters);
 
-            Assert.AreEqual(6, result.Charts.Count());
-            Assert.AreEqual(4, result.Cards.Count());
-            Assert.AreEqual(2, result.Anulaciones.Count());
+            Assert.That(result.Charts.Count(), Is.EqualTo(6));
+            Assert.That(result.Cards.Count(), Is.EqualTo(4));
+            Assert.That(result.Anulaciones.Count(), Is.EqualTo(2));
         }
 
         [Test]
@@ -101,9 +101,9 @@ namespace Builders
             var builder = new DashboardBuilder(anulacionesMapper, chartMapper, cardMapper);
             var result = builder.Build(model, parameters);
 
-            Assert.AreEqual(0, result.Charts.Count());
-            Assert.AreEqual(0, result.Cards.Count());
-            Assert.AreEqual(0, result.Anulaciones.Count());
+            Assert.That(result.Charts.Count(), Is.EqualTo(0));
+            Assert.That(result.Cards.Count(), Is.EqualTo(0));
+            Assert.That(result.Anulaciones.Count(), Is.EqualTo(0));
         }
     }
 }

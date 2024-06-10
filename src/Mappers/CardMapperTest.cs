@@ -12,7 +12,7 @@ namespace Mappers
 
             var result = (new CardMapper()).Map(model);
 
-            Assert.AreEqual("100", result.Value);
+            Assert.That(result.Value, Is.EqualTo("100"));
         }
 
         [Test]
@@ -20,8 +20,7 @@ namespace Mappers
             var model = new Card<int, double> { Value = 100, Value2 = 200.55 };
 
             var result = (new CardMapper()).Map(model);
-
-            Assert.AreEqual("100", result.Value);
+            Assert.That(result.Value, Is.EqualTo("100"));
         }
 
         [Test]
@@ -29,8 +28,7 @@ namespace Mappers
             var model = new Card<double> { Value = 200.55 };
 
             var result = (new CardMapper()).Map(model);
-
-            Assert.AreEqual("200.55", result.Value);
+            Assert.That(result.Value, Is.EqualTo("200.55"));
         }
 
         [Test]
@@ -39,8 +37,7 @@ namespace Mappers
             var pax = new Card<int> {Value=10};
 
             var result = (new CardMapper()).MapTicketPromedio(produccion, pax);
-
-            Assert.AreEqual("20.05", result.Value);
+            Assert.That(result.Value, Is.EqualTo("20.05"));
         }
 
         [Test]
@@ -49,8 +46,7 @@ namespace Mappers
             var pax = new Card<int> {Value=0};
 
             var result = (new CardMapper()).MapTicketPromedio(produccion, pax);
-
-            Assert.AreEqual("0.00", result.Value);
+            Assert.That(result.Value, Is.EqualTo("0.00"));
         }
 
         [Test]
@@ -60,7 +56,7 @@ namespace Mappers
 
             var result = (new CardMapper()).MapTicketPromedio(produccion, pax);
 
-            Assert.AreEqual("0.00", result.Value);
+            Assert.That(result.Value, Is.EqualTo("0.00"));
         }
 
         [Test]
@@ -70,7 +66,7 @@ namespace Mappers
 
             var result = (new CardMapper()).MapTicketPromedio(produccion, pax);
 
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -80,7 +76,7 @@ namespace Mappers
 
             var result = (new CardMapper()).MapTicketPromedio(produccion, pax);
 
-            Assert.AreEqual(null, result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -88,8 +84,8 @@ namespace Mappers
             var result = (new CardMapper()).Map<int>(null);
             var result2 = (new CardMapper()).Map<int, double>(null);
 
-            Assert.AreEqual(null, result);
-            Assert.AreEqual(null, result2);
+            Assert.That(result, Is.Null);
+            Assert.That(result2, Is.Null);
         }
     }
 }
