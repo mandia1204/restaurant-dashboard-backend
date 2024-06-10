@@ -39,16 +39,16 @@
             "processId": "${command:pickProcess}"
         },
         {
-            "name": "minikube Attach",
+            "name": "k8s container Attach",
             "type": "coreclr",
             "request": "attach",
-            "processName": "dotnet",
+            "processId": "${command:pickRemoteProcess}",
             "sourceFileMap": {
                 "/app": "${workspaceRoot}/src"
             },
             "pipeTransport": {
                 "pipeProgram": "kubectl",
-                "pipeArgs": ["exec", "-i", "dashboard-be-app-8478645c9b-lb6rx","--" ],
+                "pipeArgs": ["exec", "-i", "dashboard-be-app-5d7bc755db-5nscv","--" ],
                 "debuggerPath": "/vsdbg/vsdbg",
                 "pipeCwd": "${workspaceRoot}",
                 "quoteArgs": false
